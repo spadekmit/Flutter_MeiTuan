@@ -9,7 +9,6 @@ class OrderPage extends StatefulWidget {
 class _OrderPageState extends State<OrderPage> {
   @override
   Widget build(BuildContext context) {
-
     const tabStr = <String>[
       "全部",
       "待付款",
@@ -34,7 +33,9 @@ class _OrderPageState extends State<OrderPage> {
             title: Text("我的订单"),
             centerTitle: true,
             bottom: TabBar(
-                isScrollable: true,
+              indicatorSize: TabBarIndicatorSize.label,
+                labelPadding: EdgeInsets.all(0.0),
+                isScrollable: false,
                 tabs: tabStr
                     .map((str) => Tab(
                           key: Key(str),
@@ -43,11 +44,21 @@ class _OrderPageState extends State<OrderPage> {
                     .toList()),
           ),
           body: TabBarView(children: <Widget>[
-            Center(child: Image.asset("images/test.png"),),
-            Center(child: Image.asset("images/test.png"),),
-            Center(child: Image.asset("images/test.png"),),
-            Center(child: Image.asset("images/test.png"),),
-            Center(child: Image.asset("images/test.png"),),
+            Center(
+              child: Image.asset("images/test.png"),
+            ),
+            Center(
+              child: Image.asset("images/test.png"),
+            ),
+            Center(
+              child: Image.asset("images/test.png"),
+            ),
+            Center(
+              child: Image.asset("images/test.png"),
+            ),
+            Center(
+              child: Image.asset("images/test.png"),
+            ),
           ]),
         ),
       ),
