@@ -21,11 +21,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: TabScaffold(),
-      theme: ThemeData(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
+      theme: new ThemeData(
+        primarySwatch: Colors.orange,
+        primaryColor: Colors.white,
+        accentColor: Colors.green,
+        primaryColorBrightness: Brightness.light,
       ),
+      home: TabScaffold(),
     );
   }
 }
