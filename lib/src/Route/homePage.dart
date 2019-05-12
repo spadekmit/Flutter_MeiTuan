@@ -208,32 +208,66 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         SlidesShowWidget(),
-        ScenicCard(price: PriceText("5"), score: "4.8分", address: " | 东城区", title: "故宫博物院（故宫) (5A)", tags: <String>[
-          "网红地打卡",
-          "帝王宫殿",
-          "5A景点",
-        ], imageUrls: <String>["http://p0.meituan.net/travel/83544ca4b38bbe0f7644982c3528defd117921.jpg@660w_500h_1e_1c",
-          "http://p1.meituan.net/poi/e732ed2314a1a2619e6c3254fd2f1fd0112611.jpg",
-          "http://p0.meituan.net/poi/e7d94c4d609e5dd4d71bcea6a5eb0c5e220371.jpg"],),
+        ScenicCard(
+          price: PriceText("5"),
+          score: "4.8分",
+          address: " | 东城区",
+          title: "故宫博物院（故宫) (5A)",
+          tags: <Widget>[
+            MyTag(tag: "网红地打卡"),
+            MyTag(tag: "帝王宫殿"),
+            MyTag(tag: "5A景点"),
+          ],
+          imageUrls: <String>[
+            "http://p0.meituan.net/travel/83544ca4b38bbe0f7644982c3528defd117921.jpg@660w_500h_1e_1c",
+            "http://p1.meituan.net/poi/e732ed2314a1a2619e6c3254fd2f1fd0112611.jpg",
+            "http://p0.meituan.net/poi/e7d94c4d609e5dd4d71bcea6a5eb0c5e220371.jpg"
+          ],
+        ),
         BigPictureCateCard(
           title: "老北京涮肉 4 人餐",
           content: "套餐包括：羔羊肉，肥牛，香辣锅，鱼丸，炸灌肠，...",
           address: "南锣鼓巷",
-          price: PriceText("139"),
-          tags: <String>["销量火爆"],
-          imageUrls: <String>["http://p1.meituan.net/deal/87d9fbf3dba19daf2becbca8c8daee74145248.jpg@428w_320h_1e_1c",
+          price: RichText(
+            text: TextSpan(children: <TextSpan>[
+              TextSpan(
+                  text: "￥",
+                  style: TextStyle(fontSize: 10.0, color: Colors.red)),
+              TextSpan(
+                  text: "139",
+                  style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold)),
+              TextSpan(
+                  text: "￥190",
+                  style: TextStyle(
+                      decoration: TextDecoration.lineThrough,
+                      color: Colors.black,
+                      fontSize: 10.0))
+            ]),
+          ),
+          tags: <Widget>[MyTag(tag: "5.7折", isEmphasize: true,), MyTag(tag: "销量火爆")],
+          imageUrls: <String>[
+            "http://p1.meituan.net/deal/87d9fbf3dba19daf2becbca8c8daee74145248.jpg@428w_320h_1e_1c",
             "http://p0.meituan.net/deal/2d65c591c7b02f9ca9bc61f667262319220693.jpg@428w_320h_1e_1c",
-            "http://p1.meituan.net/deal/4aea58490b74263d7170177fe3ab9f4c26990.jpg@428w_320h_1e_1c"],
+            "http://p1.meituan.net/deal/4aea58490b74263d7170177fe3ab9f4c26990.jpg@428w_320h_1e_1c"
+          ],
         ),
         ScenicCard(
-          price: Text("免费", style: TextStyle(color: Colors.red, fontSize: 10.0),),
+          price: Text(
+            "免费",
+            style: TextStyle(color: Colors.red, fontSize: 10.0),
+          ),
           score: "4.6分",
           address: " | 后海/什刹海",
           title: "后海",
-          tags: <String>["城市地标", "陪爸妈"],
-          imageUrls: <String>["https://p1.meituan.net/hotel/828cc5794f92e40c5de5182cb1b30993316981.jpg@220w_125h_1e_1c",
+          tags: <Widget>[MyTag(tag: "城市地标"), MyTag(tag: "陪爸妈")],
+          imageUrls: <String>[
+            "https://p1.meituan.net/hotel/828cc5794f92e40c5de5182cb1b30993316981.jpg@220w_125h_1e_1c",
             "http://p1.meituan.net/hoteltdc/998c2b9face5e48942e10b90bf42803a154752.jpg",
-            "http://p0.meituan.net/hotel/aaa8a7aed2ce2fe43aea50d6616293b2119956.jpg"],
+            "http://p0.meituan.net/hotel/aaa8a7aed2ce2fe43aea50d6616293b2119956.jpg"
+          ],
         ),
       ];
     }

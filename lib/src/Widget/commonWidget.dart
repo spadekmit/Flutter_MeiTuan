@@ -25,7 +25,11 @@ class PriceText extends StatelessWidget {
         TextSpan(
             text: "￥", style: TextStyle(fontSize: 10.0, color: Colors.red)),
         TextSpan(
-            text: _price, style: TextStyle(fontSize: 15.0, color: Colors.red)),
+            text: _price,
+            style: TextStyle(
+                fontSize: 15.0,
+                color: Colors.red,
+                fontWeight: FontWeight.bold)),
         TextSpan(
             text: " 起", style: TextStyle(fontSize: 10.0, color: Colors.black))
       ]),
@@ -43,12 +47,13 @@ class MyTag extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: new Border.all(color: Colors.black, width: 0.5),
-        borderRadius: new BorderRadius.circular((3.0)),
-      ),
+              border: Border.all(color: isEmphasize ? Colors.red : Colors.black, width: 0.5),
+              color: isEmphasize ? Colors.red : Colors.white,
+              borderRadius: BorderRadius.circular((3.0)),
+            ),
       child: Text(
         " " + tag + " ",
-        style: TextStyle(fontSize: 8.0),
+        style: TextStyle(fontSize: 8.0, color: isEmphasize ? Colors.white : Colors.black),
       ),
     );
   }
@@ -61,11 +66,11 @@ class ScenicCard extends StatelessWidget {
       @required this.imageUrls,
       @required this.score,
       @required this.address,
-      this.tags = const <String>[]})
+      this.tags = const <Widget>[]})
       : assert(imageUrls.length == 3);
 
   final Widget price;
-  final List<String> tags;
+  final List<Widget> tags;
   final String title;
   final List<String> imageUrls;
   final String score;
@@ -80,13 +85,11 @@ class ScenicCard extends StatelessWidget {
     ];
 
     if (tags.length > 0) {
-      tags.forEach((str) {
+      tags.forEach((tag) {
         tagList.add(SizedBox(
           width: 5.0,
         ));
-        tagList.add(MyTag(
-          tag: str,
-        ));
+        tagList.add(tag);
       });
     }
 
@@ -161,11 +164,11 @@ class BigPictureCateCard extends StatelessWidget {
       @required this.imageUrls,
       @required this.content,
       @required this.address,
-      this.tags = const <String>[]})
+      this.tags = const <Widget>[]})
       : assert(imageUrls.length == 3);
 
   final Widget price;
-  final List<String> tags;
+  final List<Widget> tags;
   final String title;
   final List<String> imageUrls;
   final String content;
@@ -180,13 +183,11 @@ class BigPictureCateCard extends StatelessWidget {
     ];
 
     if (tags.length > 0) {
-      tags.forEach((str) {
+      tags.forEach((tag) {
         tagList.add(SizedBox(
           width: 5.0,
         ));
-        tagList.add(MyTag(
-          tag: str,
-        ));
+        tagList.add(tag);
       });
     }
 
