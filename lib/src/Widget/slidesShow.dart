@@ -43,33 +43,53 @@ class _SlidesShowWidgetState extends State<SlidesShowWidget>
             children: <Widget>[
               Card(
                 elevation: 0.0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                color: Colors.blue,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15.0),
+                  child: Image.network(
+                    "http://5b0988e595225.cdn.sohucs.com/images/20171105/2e36a4b9c5764a5cb1b6a7ee84f85146.jpeg",
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
               ),
               Card(
                 elevation: 0.0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                color: Colors.red,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15.0),
+                  child: Image.network(
+                    "https://b-ssl.duitang.com/uploads/item/201602/17/20160217155320_FUCuw.thumb.700_0.jpeg",
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
               ),
               Card(
                 elevation: 0.0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                color: Colors.green,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15.0),
+                  child: Image.network(
+                    "http://img3.duitang.com/uploads/item/201505/27/20150527174204_aThSR.jpeg",
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
               ),
               Card(
                 elevation: 0.0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                color: Colors.blue,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15.0),
+                  child: Image.network(
+                    "http://5b0988e595225.cdn.sohucs.com/images/20171105/2e36a4b9c5764a5cb1b6a7ee84f85146.jpeg",
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
               ),
               Card(
                 elevation: 0.0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                color: Colors.red,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15.0),
+                  child: Image.network(
+                    "https://b-ssl.duitang.com/uploads/item/201602/17/20160217155320_FUCuw.thumb.700_0.jpeg",
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
               ),
             ],
           ),
@@ -95,7 +115,8 @@ class _SlidesShowWidgetState extends State<SlidesShowWidget>
 
   void _handleTimeout(Timer timer) {
     _index++;
-    _pageController.animateToPage(_index % 3, duration: Duration(microseconds: 16), curve: Curves.fastOutSlowIn);
+    _pageController.animateToPage(_index % 3,
+        duration: Duration(microseconds: 16), curve: Curves.fastOutSlowIn);
     _tabController.animateTo(_index % 3);
   }
 
