@@ -8,23 +8,14 @@ class FindPage extends StatefulWidget {
 }
 
 class _FindPageState extends State<FindPage> {
-
   Widget _buildBody(int index) {
     switch (index) {
       case 0:
         return StaggeredGridView.countBuilder(
           crossAxisCount: 2,
           itemCount: 12,
-          itemBuilder: (BuildContext context, int index) => new Container(
-              color: Colors.green,
-              child: new Center(
-                child: new CircleAvatar(
-                  backgroundColor: Colors.white,
-                  child: new Text('$index'),
-                ),
-              )),
-          staggeredTileBuilder: (int index) =>
-              StaggeredTile.count(1, 1.6),
+          itemBuilder: (BuildContext context, int index) => VideoCard(),
+          staggeredTileBuilder: (int index) => StaggeredTile.count(1, 1.8),
           mainAxisSpacing: 4.0,
           crossAxisSpacing: 4.0,
         );
@@ -93,6 +84,38 @@ class _FindPageState extends State<FindPage> {
             _buildBody(7),
             _buildBody(8),
           ]),
+        ),
+      ),
+    );
+  }
+}
+
+class VideoCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Card(
+        child: Column(
+          children: <Widget>[
+            Image.network(
+                "https://p0.meituan.net/moviemachine/f7d2ad70eb79d6d9b8a197713db9b8c41711752.jpg@214w_297h_1e_1c", fit: BoxFit.fitWidth,),
+            SizedBox(height: 10.0,),
+            Text("强烈推荐滑道。非常好玩", style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),),
+            SizedBox(height: 10.0,),
+            Row(
+              children: <Widget>[
+                ClipOval(
+                  child: Image.network(
+                      "https://img.meituan.net/avatar/a9bf5c4ee3c5f171f264cb12d52e332137228.jpg@200w_200h_1e_1c", height: 20.0,),
+                ),
+                Text("vivilex"),
+                Flexible(
+                  fit: FlexFit.loose,
+                  child: Container(),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

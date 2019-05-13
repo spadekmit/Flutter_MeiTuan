@@ -224,9 +224,13 @@ class BigPictureCateCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(
-                    content,
-                    style: BehindGradeTextStyle,
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width - 100,
+                      child: Text(
+                      content,
+                      style: BehindGradeTextStyle,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   Text(
                     address,
