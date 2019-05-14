@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_meituan/src/Style/MyTextStyle.dart';
+import 'package:flutter_meituan/src/Style/myTheme.dart';
 
 Widget _buildImage(double width, double height, String url) {
   return ClipRRect(
@@ -47,13 +47,15 @@ class MyTag extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-              border: Border.all(color: isEmphasize ? Colors.red : Colors.black, width: 0.5),
-              color: isEmphasize ? Colors.red : Colors.white,
-              borderRadius: BorderRadius.circular((3.0)),
-            ),
+        border: Border.all(
+            color: isEmphasize ? Colors.red : Colors.black, width: 0.5),
+        color: isEmphasize ? Colors.red : Colors.white,
+        borderRadius: BorderRadius.circular((3.0)),
+      ),
       child: Text(
         " " + tag + " ",
-        style: TextStyle(fontSize: 8.0, color: isEmphasize ? Colors.white : Colors.black),
+        style: TextStyle(
+            fontSize: 8.0, color: isEmphasize ? Colors.white : Colors.black),
       ),
     );
   }
@@ -96,6 +98,9 @@ class ScenicCard extends StatelessWidget {
     return Container(
       height: 220.0,
       child: Card(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+        ),
         elevation: 0.0,
         margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
         color: Colors.white,
@@ -194,6 +199,9 @@ class BigPictureCateCard extends StatelessWidget {
     return Container(
       height: 340.0,
       child: Card(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+        ),
         elevation: 0.0,
         margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
         color: Colors.white,
@@ -226,7 +234,7 @@ class BigPictureCateCard extends StatelessWidget {
                 children: <Widget>[
                   SizedBox(
                     width: MediaQuery.of(context).size.width - 100,
-                      child: Text(
+                    child: Text(
                       content,
                       style: BehindGradeTextStyle,
                       overflow: TextOverflow.ellipsis,

@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_meituan/src/app.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_meituan/src/tabScaffold.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,14 +21,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: new ThemeData(
-        primarySwatch: Colors.orange,
-        primaryColor: Colors.white,
-        accentColor: Colors.green,
-        primaryColorBrightness: Brightness.light,
+      theme: ThemeData(
+        primaryColor: Colors.white
       ),
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        DefaultCupertinoLocalizations.delegate,
+      ],
       home: TabScaffold(),
     );
   }

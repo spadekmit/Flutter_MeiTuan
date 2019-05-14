@@ -31,6 +31,21 @@ class _SlidesShowWidgetState extends State<SlidesShowWidget>
 
   @override
   Widget build(BuildContext context) {
+
+    Widget _buildImage(String imageUrl) {
+      return Card(
+        color: Colors.transparent,
+        elevation: 0.0,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15.0),
+          child: Image.network(
+            imageUrl,
+            fit: BoxFit.fitWidth,
+          ),
+        ),
+      );
+    }
+
     return Container(
       padding: const EdgeInsets.only(
           left: 10.0, right: 10.0, top: 30.0, bottom: 0.0),
@@ -41,56 +56,11 @@ class _SlidesShowWidgetState extends State<SlidesShowWidget>
             onPageChanged: _handlePageChanged,
             controller: _pageController,
             children: <Widget>[
-              Card(
-                elevation: 0.0,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15.0),
-                  child: Image.network(
-                    "http://5b0988e595225.cdn.sohucs.com/images/20171105/2e36a4b9c5764a5cb1b6a7ee84f85146.jpeg",
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-              ),
-              Card(
-                elevation: 0.0,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15.0),
-                  child: Image.network(
-                    "https://b-ssl.duitang.com/uploads/item/201602/17/20160217155320_FUCuw.thumb.700_0.jpeg",
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-              ),
-              Card(
-                elevation: 0.0,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15.0),
-                  child: Image.network(
-                    "http://img3.duitang.com/uploads/item/201505/27/20150527174204_aThSR.jpeg",
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-              ),
-              Card(
-                elevation: 0.0,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15.0),
-                  child: Image.network(
-                    "http://5b0988e595225.cdn.sohucs.com/images/20171105/2e36a4b9c5764a5cb1b6a7ee84f85146.jpeg",
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-              ),
-              Card(
-                elevation: 0.0,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15.0),
-                  child: Image.network(
-                    "https://b-ssl.duitang.com/uploads/item/201602/17/20160217155320_FUCuw.thumb.700_0.jpeg",
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-              ),
+              _buildImage("http://5b0988e595225.cdn.sohucs.com/images/20171105/2e36a4b9c5764a5cb1b6a7ee84f85146.jpeg"),
+              _buildImage("https://b-ssl.duitang.com/uploads/item/201602/17/20160217155320_FUCuw.thumb.700_0.jpeg"),
+              _buildImage("http://img3.duitang.com/uploads/item/201505/27/20150527174204_aThSR.jpeg"),
+              _buildImage("http://5b0988e595225.cdn.sohucs.com/images/20171105/2e36a4b9c5764a5cb1b6a7ee84f85146.jpeg"),
+              _buildImage("https://b-ssl.duitang.com/uploads/item/201602/17/20160217155320_FUCuw.thumb.700_0.jpeg"),
             ],
           ),
           Align(
@@ -133,39 +103,3 @@ class _SlidesShowWidgetState extends State<SlidesShowWidget>
     }
   }
 }
-
-Widget row = Row(
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: <Widget>[
-    Container(
-      height: 10.0,
-      width: 10.0,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.black,
-      ),
-    ),
-    SizedBox(
-      width: 10.0,
-    ),
-    Container(
-      height: 10.0,
-      width: 10.0,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.black,
-      ),
-    ),
-    SizedBox(
-      width: 10.0,
-    ),
-    Container(
-      height: 10.0,
-      width: 10.0,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.black,
-      ),
-    ),
-  ],
-);

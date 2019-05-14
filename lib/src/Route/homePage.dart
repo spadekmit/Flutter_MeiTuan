@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_meituan/src/Route/testPage.dart';
+import 'package:flutter_meituan/src/Style/myTheme.dart';
 import 'package:flutter_meituan/src/Widget/commonWidget.dart';
 import 'package:flutter_meituan/src/Widget/slidesShow.dart';
 
@@ -12,86 +14,91 @@ class _HomePageState extends State<HomePage> {
   ///主界面AppBar
   AppBar _buildHomeAppBar() {
     return AppBar(
+      automaticallyImplyLeading: false,
       elevation: 0.0,
       backgroundColor: Colors.white,
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: ClipOval(
-              child: Image.network(
-                  "http://sc.adminbuy.cn/uploads/allimg/160920/1-160920154T90-L.png",
-                  width: 35.0,
-                  height: 35.0),
+      flexibleSpace: SafeArea(    //适配刘海
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: ClipOval(
+                child: Image.asset(
+                    "images/protrait.png",
+                    width: 35.0,
+                    height: 35.0),
+              ),
             ),
-          ),
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(
-                      "三河",
-                      style: TextStyle(color: Colors.black, fontSize: 15.0),
-                    ),
-                    Icon(
-                      Icons.keyboard_arrow_down,
-                      size: 15.0,
-                    ),
-                  ],
-                ),
-                Text(
-                  "晴 20°",
-                  style: TextStyle(fontSize: 10.0),
-                )
-              ],
+            Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text(
+                        "三河",
+                        style: TextStyle(color: Colors.black, fontSize: 15.0),
+                      ),
+                      Icon(
+                        Icons.keyboard_arrow_down,
+                        size: 15.0,
+                      ),
+                    ],
+                  ),
+                  Text(
+                    "晴 20°",
+                    style: TextStyle(fontSize: 10.0),
+                  )
+                ],
+              ),
+              padding: const EdgeInsets.all(8.0),
             ),
-            padding: const EdgeInsets.all(8.0),
-          ),
-          Expanded(
-            child: Container(
-              height: 45.0,
-              child: Card(
-                elevation: 0.0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                color: Colors.grey[200],
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(
-                      Icons.search,
-                      color: Colors.black87,
-                      size: 20.0,
-                    ),
-                    Text(
-                      "自助烤肉",
-                      style: TextStyle(fontSize: 15.0, color: Colors.black87),
-                    ),
-                  ],
+            Expanded(
+              child: Container(
+                height: 45.0,
+                child: Card(
+                  elevation: 0.0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                  color: Colors.grey[200],
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        Icons.search,
+                        color: Colors.black87,
+                        size: 20.0,
+                      ),
+                      Text(
+                        "自助烤肉",
+                        style: TextStyle(fontSize: 15.0, color: Colors.black87),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+            IconButton(
+              iconSize: 30,
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              padding: EdgeInsets.zero,
+              icon: Icon(
+                Icons.add,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                Navigator.of(context).push(CupertinoPageRoute(builder: (context) {
+                  return TextPage();
+                }));
+              },
+            )
+          ],
+        ),
       ),
-      actions: <Widget>[
-        IconButton(
-          iconSize: 30,
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          padding: EdgeInsets.zero,
-          icon: Icon(
-            Icons.add,
-            color: Colors.black,
-          ),
-          onPressed: () {},
-        )
-      ],
     );
   }
 
@@ -107,11 +114,11 @@ class _HomePageState extends State<HomePage> {
       "外卖",
     ];
     const url1 = <String>[
-      "http://sc.adminbuy.cn/uploads/allimg/160115/1-1601151501580-L.png",
-      "http://sc.adminbuy.cn/uploads/allimg/160919/1-1609191646070-L.png",
-      "http://sc.adminbuy.cn/uploads/allimg/160919/1-1609191615390-L.png",
-      "http://sc.adminbuy.cn/uploads/allimg/160120/1-1601201511320-L.png",
-      "http://sc.adminbuy.cn/uploads/allimg/160120/1-160120151G40-L.png",
+      "images/title/18.png",
+      "images/title/17.png",
+      "images/title/16.png",
+      "images/title/19.png",
+      "images/title/20.png",
     ];
     const title2 = <String>[
       "亲子",
@@ -121,11 +128,11 @@ class _HomePageState extends State<HomePage> {
       "超市/生鲜",
     ];
     const url2 = <String>[
-      "http://sc.adminbuy.cn/uploads/allimg/160919/1-1609191614370-L.png",
-      "http://sc.adminbuy.cn/uploads/allimg/160421/1-160421153Q30-L.png",
-      "http://sc.adminbuy.cn/uploads/allimg/160919/1-1609191623120-L.png",
-      "http://sc.adminbuy.cn/uploads/allimg/160115/1-1601151513510-L.png",
-      "http://sc.adminbuy.cn/uploads/allimg/160219/1-1602191524360-L.png",
+      "images/title/6.png",
+      "images/title/7.png",
+      "images/title/8.png",
+      "images/title/9.png",
+      "images/title/10.png",
     ];
     const title3 = <String>[
       "医疗/牙科",
@@ -135,11 +142,11 @@ class _HomePageState extends State<HomePage> {
       "更多",
     ];
     const url3 = <String>[
-      "http://sc.adminbuy.cn/uploads/151023/1-151023205615122.png",
-      "http://sc.adminbuy.cn/uploads/151023/1-151023221943F5.png",
-      "http://sc.adminbuy.cn/uploads/allimg/170119/1-1F1191325110-L.png",
-      "http://sc.adminbuy.cn/uploads/allimg/170119/1-1F1191319380-L.png",
-      "http://sc.adminbuy.cn/uploads/allimg/170119/1-1F1191339130-L.png",
+      "images/title/11.png",
+      "images/title/12.png",
+      "images/title/13.png",
+      "images/title/14.png",
+      "images/title/15.png",
     ];
 
     Widget _buildImageButton(Image image, String title) {
@@ -167,7 +174,7 @@ class _HomePageState extends State<HomePage> {
       List<Widget> titleList = <Widget>[];
       for (int i = 0; i < strs.length; i++) {
         titleList.add(_buildImageButton(
-            Image.network(
+            Image.asset(
               urls[i],
               width: width,
               height: width,
@@ -257,7 +264,7 @@ class _HomePageState extends State<HomePage> {
         ScenicCard(
           price: Text(
             "免费",
-            style: TextStyle(color: Colors.red, fontSize: 10.0),
+            style: TextStyle(color: Colors.red, fontSize: 10.0, fontWeight: FontWeight.bold),
           ),
           score: "4.6分",
           address: " | 后海/什刹海",
@@ -274,8 +281,11 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: _buildHomeAppBar(),
-      body: ListView(
-        children: _buildBody(),
+      body: Container(
+        decoration: GradientDecoration,
+        child: ListView(
+          children: _buildBody(),
+        ),
       ),
     );
   }

@@ -24,6 +24,7 @@ class _TabScaffoldState extends State<TabScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: CupertinoTabBar(
+        backgroundColor: Colors.white,
         activeColor: Colors.teal,
         currentIndex: _selectedIndex,
         onTap: (index) {

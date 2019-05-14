@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_meituan/src/Style/myTheme.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'dart:math';
 
 class FindPage extends StatefulWidget {
   @override
@@ -9,8 +11,20 @@ class FindPage extends StatefulWidget {
 
 class _FindPageState extends State<FindPage> {
   Widget _buildBody(int index) {
+    var rng = Random();
     switch (index) {
       case 0:
+        return StaggeredGridView.countBuilder(
+          crossAxisCount: 2,
+          itemCount: 12,
+          itemBuilder: (BuildContext context, int index) =>
+              VideoCard(imageHeight: 50.0 + rng.nextInt(200)),
+          staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+          mainAxisSpacing: 4.0,
+          crossAxisSpacing: 4.0,
+        );
+        break;
+      default:
         return StaggeredGridView.countBuilder(
           crossAxisCount: 2,
           itemCount: 12,
@@ -20,17 +34,11 @@ class _FindPageState extends State<FindPage> {
           crossAxisSpacing: 4.0,
         );
         break;
-      default:
-        return Center(
-          child: Image.asset("images/test.png"),
-        );
-        break;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final cardWidth = (MediaQuery.of(context).size.width - 20.0) / 2;
     const tabStr = <String>[
       "推荐",
       "旅行",
@@ -56,7 +64,6 @@ class _FindPageState extends State<FindPage> {
         child: Scaffold(
           appBar: AppBar(
             elevation: 0.0,
-            backgroundColor: Colors.white,
             title: Text(
               "发现",
               style: TextStyle(
@@ -73,17 +80,21 @@ class _FindPageState extends State<FindPage> {
                         ))
                     .toList()),
           ),
-          body: TabBarView(children: <Widget>[
-            _buildBody(0),
-            _buildBody(1),
-            _buildBody(2),
-            _buildBody(3),
-            _buildBody(4),
-            _buildBody(5),
-            _buildBody(6),
-            _buildBody(7),
-            _buildBody(8),
-          ]),
+          body: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            decoration: GradientDecoration,
+            child: TabBarView(children: <Widget>[
+              _buildBody(0),
+              _buildBody(1),
+              _buildBody(2),
+              _buildBody(3),
+              _buildBody(4),
+              _buildBody(5),
+              _buildBody(6),
+              _buildBody(7),
+              _buildBody(8),
+            ]),
+          ),
         ),
       ),
     );
@@ -91,32 +102,60 @@ class _FindPageState extends State<FindPage> {
 }
 
 class VideoCard extends StatelessWidget {
+  VideoCard({@required this.imageHeight});
+
+  final double imageHeight;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Card(
-        child: Column(
-          children: <Widget>[
-            Image.network(
-                "https://p0.meituan.net/moviemachine/f7d2ad70eb79d6d9b8a197713db9b8c41711752.jpg@214w_297h_1e_1c", fit: BoxFit.fitWidth,),
-            SizedBox(height: 10.0,),
-            Text("强烈推荐滑道。非常好玩", style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),),
-            SizedBox(height: 10.0,),
-            Row(
+    return Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+      ),
+      color: Colors.white,
+      elevation: 0.0,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(5.0), topRight: Radius.circular(5.0)),
+            child: Container(
+              width: double.infinity,
+              height: imageHeight,
+              child: Image.network(
+                "https://p0.meituan.net/moviemachine/f7d2ad70eb79d6d9b8a197713db9b8c41711752.jpg@214w_297h_1e_1c",
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "妇联四啥的压根没看过，就瞎几把放的图片",
+              style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
+            child: Row(
               children: <Widget>[
                 ClipOval(
                   child: Image.network(
-                      "https://img.meituan.net/avatar/a9bf5c4ee3c5f171f264cb12d52e332137228.jpg@200w_200h_1e_1c", height: 20.0,),
+                    "https://img.meituan.net/avatar/a9bf5c4ee3c5f171f264cb12d52e332137228.jpg@200w_200h_1e_1c",
+                    height: 20.0,
+                  ),
                 ),
                 Text("vivilex"),
                 Flexible(
                   fit: FlexFit.loose,
                   child: Container(),
                 ),
+                Icon(Icons.insert_emoticon)
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
