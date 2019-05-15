@@ -17,17 +17,16 @@ class _HomePageState extends State<HomePage> {
       automaticallyImplyLeading: false,
       elevation: 0.0,
       backgroundColor: Colors.white,
-      flexibleSpace: SafeArea(    //适配刘海
+      flexibleSpace: SafeArea(
+        //适配刘海
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: ClipOval(
-                child: Image.asset(
-                    "images/protrait.png",
-                    width: 35.0,
-                    height: 35.0),
+                child: Image.asset("images/protrait.png",
+                    width: 35.0, height: 35.0),
               ),
             ),
             Container(
@@ -91,7 +90,8 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.black,
               ),
               onPressed: () {
-                Navigator.of(context).push(CupertinoPageRoute(builder: (context) {
+                Navigator.of(context)
+                    .push(CupertinoPageRoute(builder: (context) {
                   return TextPage();
                 }));
               },
@@ -149,37 +149,18 @@ class _HomePageState extends State<HomePage> {
       "images/title/15.png",
     ];
 
-    Widget _buildImageButton(Image image, String title) {
-      return Container(
-        width: (screenWidth - 30) / 5.0,
-        child: Column(
-          children: <Widget>[
-            Container(
-              child: image,
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            Text(
-              title,
-              style: TextStyle(fontSize: 12.0),
-            )
-          ],
-        ),
-      );
-    }
-
     List<Widget> _buildTitle(
         List<String> strs, List<String> urls, double width) {
       List<Widget> titleList = <Widget>[];
       for (int i = 0; i < strs.length; i++) {
-        titleList.add(_buildImageButton(
-            Image.asset(
+        titleList.add(MyImageButton(
+            image: Image.asset(
               urls[i],
               width: width,
               height: width,
             ),
-            strs[i]));
+            title: strs[i],
+            width: (screenWidth - 30) / 5.0));
       }
       return titleList;
     }
@@ -191,7 +172,51 @@ class _HomePageState extends State<HomePage> {
               left: 15.0, right: 15.0, bottom: 5.0, top: 10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: _buildTitle(title1, url1, screenWidth / 7.0),
+            children: <Widget>[
+              MyImageButton(
+                  image: Image.asset(
+                    url1[0],
+                    width: screenWidth / 7,
+                    height: screenWidth / 7,
+                  ),
+                  title: title1[0],
+                  width: (screenWidth - 30) / 5.0),
+              MyImageButton(
+                  image: Image.asset(
+                    url1[1],
+                    width: screenWidth / 7,
+                    height: screenWidth / 7,
+                  ),
+                  title: title1[1],
+                  width: (screenWidth - 30) / 5.0),
+              MyImageButton(
+                  image: Image.asset(
+                    url1[2],
+                    width: screenWidth / 7,
+                    height: screenWidth / 7,
+                  ),
+                  title: title1[2],
+                  width: (screenWidth - 30) / 5.0,
+                tip: "嗨抢",
+              ),
+              MyImageButton(
+                  image: Image.asset(
+                    url1[3],
+                    width: screenWidth / 7,
+                    height: screenWidth / 7,
+                  ),
+                  title: title1[3],
+                  tip: "网咖",
+                  width: (screenWidth - 30) / 5.0),
+              MyImageButton(
+                  image: Image.asset(
+                    url1[4],
+                    width: screenWidth / 7,
+                    height: screenWidth / 7,
+                  ),
+                  title: title1[4],
+                  width: (screenWidth - 30) / 5.0),
+            ],
           ),
         ),
         SizedBox(
@@ -214,7 +239,11 @@ class _HomePageState extends State<HomePage> {
             children: _buildTitle(title3, url3, screenWidth / 14.0),
           ),
         ),
-        SlidesShowWidget(),
+        Container(
+            padding: const EdgeInsets.only(
+                left: 10.0, right: 10.0, top: 30.0, bottom: 0.0),
+            child: SlidesShowWidget(height: 80,)
+        ),
         ScenicCard(
           price: PriceText("5"),
           score: "4.8分",
@@ -254,7 +283,13 @@ class _HomePageState extends State<HomePage> {
                       fontSize: 10.0))
             ]),
           ),
-          tags: <Widget>[MyTag(tag: "5.7折", isEmphasize: true,), MyTag(tag: "销量火爆")],
+          tags: <Widget>[
+            MyTag(
+              tag: "5.7折",
+              isEmphasize: true,
+            ),
+            MyTag(tag: "销量火爆")
+          ],
           imageUrls: <String>[
             "http://p1.meituan.net/deal/87d9fbf3dba19daf2becbca8c8daee74145248.jpg@428w_320h_1e_1c",
             "http://p0.meituan.net/deal/2d65c591c7b02f9ca9bc61f667262319220693.jpg@428w_320h_1e_1c",
@@ -264,7 +299,8 @@ class _HomePageState extends State<HomePage> {
         ScenicCard(
           price: Text(
             "免费",
-            style: TextStyle(color: Colors.red, fontSize: 10.0, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                color: Colors.red, fontSize: 10.0, fontWeight: FontWeight.bold),
           ),
           score: "4.6分",
           address: " | 后海/什刹海",

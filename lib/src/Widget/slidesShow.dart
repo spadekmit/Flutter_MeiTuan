@@ -3,6 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class SlidesShowWidget extends StatefulWidget {
+
+  SlidesShowWidget({this.height = 100});
+
+  final double height;
+
   @override
   _SlidesShowWidgetState createState() => _SlidesShowWidgetState();
 }
@@ -23,9 +28,9 @@ class _SlidesShowWidgetState extends State<SlidesShowWidget>
 
   @override
   void dispose() {
-    _tabController.dispose();
-    _pageController.dispose();
-    _timer.cancel();
+    _tabController?.dispose();
+    _pageController?.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -47,9 +52,7 @@ class _SlidesShowWidgetState extends State<SlidesShowWidget>
     }
 
     return Container(
-      padding: const EdgeInsets.only(
-          left: 10.0, right: 10.0, top: 30.0, bottom: 0.0),
-      height: 120.0,
+      height: widget.height,
       child: Stack(
         children: <Widget>[
           PageView(

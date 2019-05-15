@@ -18,7 +18,7 @@ class _FindPageState extends State<FindPage> {
           crossAxisCount: 2,
           itemCount: 12,
           itemBuilder: (BuildContext context, int index) =>
-              VideoCard(imageHeight: 50.0 + rng.nextInt(200)),
+              VideoCard(imageHeight: 80.0 + rng.nextInt(120)),
           staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
           mainAxisSpacing: 4.0,
           crossAxisSpacing: 4.0,
@@ -102,7 +102,7 @@ class _FindPageState extends State<FindPage> {
 }
 
 class VideoCard extends StatelessWidget {
-  VideoCard({@required this.imageHeight});
+  VideoCard({this.imageHeight});
 
   final double imageHeight;
 
@@ -132,7 +132,7 @@ class VideoCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              "妇联四啥的压根没看过，就瞎几把放的图片",
+              "妇联四啥的压根没看过，瞎放的图片",
               style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
             ),
           ),
@@ -151,7 +151,10 @@ class VideoCard extends StatelessWidget {
                   fit: FlexFit.loose,
                   child: Container(),
                 ),
-                Icon(Icons.insert_emoticon)
+                Icon(Icons.insert_emoticon, size: 15.0,),
+                SizedBox(width: 5.0,),
+                Text("666"),
+                SizedBox(width: 10.0,),
               ],
             ),
           ),
