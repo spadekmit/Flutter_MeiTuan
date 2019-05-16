@@ -36,11 +36,22 @@ class _SearchPageState extends State<SearchPage> {
       padding: const EdgeInsets.all(8.0),
       child: Row(
         children: <Widget>[
-          Icon(Icons.search, color: Colors.grey, size: 20,),
-          SizedBox(width: 5,),
+          Icon(
+            Icons.search,
+            color: Colors.grey,
+            size: 20,
+          ),
+          SizedBox(
+            width: 5,
+          ),
           Text(data),
-          Expanded(child: Container(),),
-          Text("约" + random.nextInt(100).toString() + "个结果", style: TextStyle(color: Colors.grey, fontSize: 12),)
+          Expanded(
+            child: Container(),
+          ),
+          Text(
+            "约" + random.nextInt(100).toString() + "个结果",
+            style: TextStyle(color: Colors.grey, fontSize: 12),
+          )
         ],
       ),
     );
@@ -48,84 +59,118 @@ class _SearchPageState extends State<SearchPage> {
 
   Widget _buildDefaultBody() {
     return Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 5.0),
-              child: Text(
-                "热门搜索",
-                style: TextStyle(fontSize: 14, color: Colors.grey),
-              ),
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: Text(
+              "热门搜索",
+              style: TextStyle(fontSize: 14, color: Colors.grey),
             ),
-            Wrap(children: <Widget>[
-              TextTag(tag: "故宫博物院",),
-              TextTag(tag: "老北京涮肉",),
-              TextTag(tag: "虾吃虾涮",),
-              TextTag(tag: "故宫珍宝馆",),
-              TextTag(tag: "北京欢乐谷",),
-              TextTag(tag: "后海",),
-            ],),
-            SizedBox(height: 5.0,),
-            Padding(
-              padding: const EdgeInsets.only(left: 5.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    "历史记录",
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
-                  ),
-                  Icon(Icons.delete, size: 18,),
-                ],
+          ),
+          Wrap(
+            children: <Widget>[
+              TextTag(
+                tag: "故宫博物院",
               ),
+              TextTag(
+                tag: "老北京涮肉",
+              ),
+              TextTag(
+                tag: "虾吃虾涮",
+              ),
+              TextTag(
+                tag: "故宫珍宝馆",
+              ),
+              TextTag(
+                tag: "北京欢乐谷",
+              ),
+              TextTag(
+                tag: "后海",
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 5.0,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  "历史记录",
+                  style: TextStyle(fontSize: 14, color: Colors.grey),
+                ),
+                Icon(
+                  Icons.delete,
+                  size: 18,
+                ),
+              ],
             ),
-            Wrap(children: <Widget>[
-              TextTag(tag: "故宫博物院",),
-              TextTag(tag: "鱼",),
-              TextTag(tag: "烤鱼",),
-              TextTag(tag: "网红炸鸡",),
-              TextTag(tag: "北京欢乐谷",),
-              TextTag(tag: "米线",),
-              TextTag(tag: "钟点房",),
-            ],),
-          ],
-        ),
-      );
+          ),
+          Wrap(
+            children: <Widget>[
+              TextTag(
+                tag: "故宫博物院",
+              ),
+              TextTag(
+                tag: "鱼",
+              ),
+              TextTag(
+                tag: "烤鱼",
+              ),
+              TextTag(
+                tag: "网红炸鸡",
+              ),
+              TextTag(
+                tag: "北京欢乐谷",
+              ),
+              TextTag(
+                tag: "米线",
+              ),
+              TextTag(
+                tag: "钟点房",
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildSearchBody(String data) {
     List<Widget> _list = <Widget>[];
-    for(int i = 0; i < 20; i++) {
+    for (int i = 0; i < 20; i++) {
       _list.add(_buildSearchRow(data + (i + 1).toString()));
     }
-    
+
     return ListView(
       children: ListTile.divideTiles(
-      context: context,
-      tiles: _list,
-    ).toList(),
+        context: context,
+        tiles: _list,
+      ).toList(),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        flexibleSpace: SafeArea(
-          child: Row(
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.arrow_back_ios),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-              Expanded(
-                child: SafeArea(
-                                  child: CupertinoTextField(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          flexibleSpace: SafeArea(
+            child: Row(
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.arrow_back_ios),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+                Expanded(
+                  child: CupertinoTextField(
                     padding: EdgeInsets.all(8),
                     autofocus: true,
                     prefix: Padding(
@@ -143,38 +188,37 @@ class _SearchPageState extends State<SearchPage> {
                     onChanged: (value) => streamController.sink.add(value),
                     onSubmitted: onSubmitted,
                     placeholder: "故宫博物馆",
-                    placeholderStyle: TextStyle(fontSize: 14, color: Colors.grey, height: 0.8),
+                    placeholderStyle: TextStyle(
+                        fontSize: 14, color: Colors.grey, height: 0.8),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(45.0),
                       color: CupertinoColors.lightBackgroundGray,
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                width: 60,
-                child: FlatButton(
-                  padding: EdgeInsets.zero,
-                  child: Text("搜索"),
-                  onPressed: () {},
+                SizedBox(
+                  width: 60,
+                  child: FlatButton(
+                    padding: EdgeInsets.zero,
+                    child: Text("搜索"),
+                    onPressed: () {},
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-      body: StreamBuilder<String>(
-        initialData: "",
-        stream: streamController.stream,
-        builder: (context, snapshot) {
-          if (snapshot.data.length > 0) {
-            return _buildSearchBody(snapshot.data);
-          }else {
-            return _buildDefaultBody();
-          }
-        },
-      )
-    );
+        body: StreamBuilder<String>(
+          initialData: "",
+          stream: streamController.stream,
+          builder: (context, snapshot) {
+            if (snapshot.data.length > 0) {
+              return _buildSearchBody(snapshot.data);
+            } else {
+              return _buildDefaultBody();
+            }
+          },
+        ));
   }
 
   void onSubmitted(String value) {}
