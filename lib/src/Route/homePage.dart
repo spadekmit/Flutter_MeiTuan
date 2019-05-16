@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_meituan/src/Route/searchPage.dart';
 import 'package:flutter_meituan/src/Route/testPage.dart';
 import 'package:flutter_meituan/src/Style/myTheme.dart';
 import 'package:flutter_meituan/src/Widget/commonWidget.dart';
@@ -56,26 +57,33 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(8.0),
             ),
             Expanded(
-              child: Container(
-                height: 45.0,
-                child: Card(
-                  elevation: 0.0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  color: Colors.grey[200],
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(
-                        Icons.search,
-                        color: Colors.black87,
-                        size: 20.0,
-                      ),
-                      Text(
-                        "自助烤肉",
-                        style: TextStyle(fontSize: 15.0, color: Colors.black87),
-                      ),
-                    ],
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(CupertinoPageRoute(
+                    builder: (context) => SearchPage()
+                  ));
+                },
+                child: Container(
+                  height: 45.0,
+                  child: Card(
+                    elevation: 0.0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                    color: Colors.grey[200],
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.search,
+                          color: Colors.black87,
+                          size: 20.0,
+                        ),
+                        Text(
+                          "自助烤肉",
+                          style: TextStyle(fontSize: 15.0, color: Colors.black87),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
