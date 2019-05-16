@@ -1,13 +1,13 @@
 # flutter_meituan
 
-A new Flutter application.
+Flutter 仿美团demo
 
 ## Screenshot
 
 
-<img src="https://github.com/spadekmit/Flutter_MeiTuan/raw/master/screenshot/1.jpg" width="300"/><img src="https://github.com/spadekmit/Flutter_MeiTuan/raw/master/screenshot/2.jpg" width="300"/>
+<img src="https://github.com/spadekmit/Flutter_MeiTuan/raw/master/screenshot/1.jpg" width="300"/>   <img src="https://github.com/spadekmit/Flutter_MeiTuan/raw/master/screenshot/2.jpg" width="300"/>
 
-<img src="https://github.com/spadekmit/Flutter_MeiTuan/raw/master/screenshot/3.jpg" width="300"/><img src="https://github.com/spadekmit/Flutter_MeiTuan/raw/master/screenshot/4.jpg" width="300"/>
+<img src="https://github.com/spadekmit/Flutter_MeiTuan/raw/master/screenshot/3.jpg" width="300"/>   <img src="https://github.com/spadekmit/Flutter_MeiTuan/raw/master/screenshot/4.jpg" width="300"/>
 
 <img src="https://github.com/spadekmit/Flutter_MeiTuan/raw/master/screenshot/5.jpg" width="300"/>
 
