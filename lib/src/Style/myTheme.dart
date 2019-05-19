@@ -8,6 +8,6 @@ const GradientDecoration = BoxDecoration(
           gradient: const LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.white, Color.fromARGB(1, 200, 200, 200)]
+            colors: [Colors.white, Color.fromARGB(50, 200, 200, 200)]
           )
         );

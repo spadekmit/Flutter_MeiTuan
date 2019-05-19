@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                   return TextPage();
                 }));
               },
-            )
+            ),
           ],
         ),
       ),

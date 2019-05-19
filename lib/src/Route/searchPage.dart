@@ -58,6 +58,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Widget _buildDefaultBody() {
+    
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Column(

@@ -139,67 +139,65 @@ class ScenicCard extends StatelessWidget {
       });
     }
 
-    return Container(
-      height: 220.0,
-      child: Card(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-        ),
-        elevation: 0.0,
-        margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    title,
-                    style: CardTitleTextStyle,
-                  ),
-                  Icon(
-                    Icons.highlight_off,
-                    size: 20.0,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 7.0,
-              ),
-              Row(
-                children: <Widget>[
-                  Text(
-                    score,
-                    style: GradeTextStyle,
-                  ),
-                  Text(
-                    address,
-                    style: BehindGradeTextStyle,
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 7.0,
-              ),
-              Row(
-                children: tagList,
-              ),
-              SizedBox(
-                height: 7.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  _buildImage(imageWidth, imageHeight, imageUrls[0]),
-                  _buildImage(imageWidth, imageHeight, imageUrls[1]),
-                  _buildImage(imageWidth, imageHeight, imageUrls[2]),
-                ],
-              )
-            ],
-          ),
+    return Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+      ),
+      elevation: 0.0,
+      margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  title,
+                  style: CardTitleTextStyle,
+                ),
+                Icon(
+                  Icons.highlight_off,
+                  size: 20.0,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 7.0,
+            ),
+            Row(
+              children: <Widget>[
+                Text(
+                  score,
+                  style: GradeTextStyle,
+                ),
+                Text(
+                  address,
+                  style: BehindGradeTextStyle,
+                )
+              ],
+            ),
+            SizedBox(
+              height: 7.0,
+            ),
+            Row(
+              children: tagList,
+            ),
+            SizedBox(
+              height: 7.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                _buildImage(imageWidth, imageHeight, imageUrls[0]),
+                _buildImage(imageWidth, imageHeight, imageUrls[1]),
+                _buildImage(imageWidth, imageHeight, imageUrls[2]),
+              ],
+            ),
+            SizedBox(height: 15,)
+          ],
         ),
       ),
     );
@@ -240,82 +238,80 @@ class BigPictureCateCard extends StatelessWidget {
       });
     }
 
-    return Container(
-      height: 340.0,
-      child: Card(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-        ),
-        elevation: 0.0,
-        margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              ///标题
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    title,
-                    style: CardTitleTextStyle,
-                  ),
-                  Icon(
-                    Icons.highlight_off,
-                    size: 20.0,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 7.0,
-              ),
+    return Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+      ),
+      elevation: 0.0,
+      margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            ///标题
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  title,
+                  style: CardTitleTextStyle,
+                ),
+                Icon(
+                  Icons.highlight_off,
+                  size: 20.0,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 7.0,
+            ),
 
-              ///套餐包含与地址
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width - 100,
-                    child: Text(
-                      content,
-                      style: BehindGradeTextStyle,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  Text(
-                    address,
+            ///套餐包含与地址
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                SizedBox(
+                  width: MediaQuery.of(context).size.width - 100,
+                  child: Text(
+                    content,
                     style: BehindGradeTextStyle,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 7.0,
-              ),
+                ),
+                Text(
+                  address,
+                  style: BehindGradeTextStyle,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 7.0,
+            ),
 
-              ///价格与标签
-              Row(
-                children: tagList,
-              ),
-              SizedBox(
-                height: 7.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  _buildImage(imageWidth * 2, imageHeight * 2, imageUrls[0]),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      _buildImage(imageWidth, imageHeight, imageUrls[1]),
-                      _buildImage(imageWidth, imageHeight, imageUrls[2]),
-                    ],
-                  ),
-                ],
-              )
-            ],
-          ),
+            ///价格与标签
+            Row(
+              children: tagList,
+            ),
+            SizedBox(
+              height: 7.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                _buildImage(imageWidth * 2, imageHeight * 2, imageUrls[0]),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    _buildImage(imageWidth, imageHeight, imageUrls[1]),
+                    _buildImage(imageWidth, imageHeight, imageUrls[2]),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: 15,)
+          ],
         ),
       ),
     );

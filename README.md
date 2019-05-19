@@ -11,6 +11,8 @@ Flutter 仿美团demo
 
 <img src="https://github.com/spadekmit/Flutter_MeiTuan/raw/master/screenshot/5.jpg" width="300"/>
 
+<img src="https://github.com/spadekmit/Flutter_MeiTuan/raw/master/screenshot/6.jpg" width="300"/>   <img src="https://github.com/spadekmit/Flutter_MeiTuan/raw/master/screenshot/7.jpg" width="300"/>
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
