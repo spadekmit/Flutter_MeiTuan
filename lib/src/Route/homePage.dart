@@ -59,9 +59,8 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(CupertinoPageRoute(
-                    builder: (context) => SearchPage()
-                  ));
+                  Navigator.of(context).push(
+                      CupertinoPageRoute(builder: (context) => SearchPage()));
                 },
                 child: Container(
                   height: 45.0,
@@ -80,7 +79,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Text(
                           "自助烤肉",
-                          style: TextStyle(fontSize: 15.0, color: Colors.black87),
+                          style:
+                              TextStyle(fontSize: 15.0, color: Colors.black87),
                         ),
                       ],
                     ),
@@ -110,8 +110,84 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _showDeleteMenu() {
+  Widget _buildMyButton(String title) {
     
+    return GestureDetector(
+      onTap: () => Navigator.of(context).pop(),
+          child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black, width: 0.5),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          child: Center(
+            child: Text(
+              title,
+              style: TextStyle(fontSize: 12.0, color: Colors.black),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showDeleteDialog() {
+    var dialog = SimpleDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      titlePadding: EdgeInsets.only(top: 20),
+      title: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            "选择具体理由，会减少相关推荐呦",
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              _buildMyButton("去过了"),
+              SizedBox(
+                width: 10,
+              ),
+              _buildMyButton("不感兴趣"),
+              SizedBox(
+                width: 10,
+              ),
+              _buildMyButton("价格不合适"),
+            ],
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Container(
+            decoration: BoxDecoration(
+                color: CupertinoColors.lightBackgroundGray,
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15))),
+            child: Center(
+              child: FlatButton(
+                child: Text(
+                  "不感兴趣",
+                  style: TextStyle(fontSize: 12, color: Colors.teal),
+                ),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+
+    showDialog(
+      context: context,
+      builder: (context) => dialog,
+    );
   }
 
   @override
@@ -203,13 +279,13 @@ class _HomePageState extends State<HomePage> {
                   title: title1[1],
                   width: (screenWidth - 30) / 5.0),
               MyImageButton(
-                  image: Image.asset(
-                    url1[2],
-                    width: screenWidth / 7,
-                    height: screenWidth / 7,
-                  ),
-                  title: title1[2],
-                  width: (screenWidth - 30) / 5.0,
+                image: Image.asset(
+                  url1[2],
+                  width: screenWidth / 7,
+                  height: screenWidth / 7,
+                ),
+                title: title1[2],
+                width: (screenWidth - 30) / 5.0,
                 tip: "嗨抢",
               ),
               MyImageButton(
@@ -257,9 +333,11 @@ class _HomePageState extends State<HomePage> {
         Container(
             padding: const EdgeInsets.only(
                 left: 10.0, right: 10.0, top: 30.0, bottom: 0.0),
-            child: SlidesShowWidget(height: 80,)
-        ),
+            child: SlidesShowWidget(
+              height: 80,
+            )),
         ScenicCard(
+          onPress: _showDeleteDialog,
           price: PriceText("5"),
           score: "4.8分",
           address: " | 东城区",
@@ -276,6 +354,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         BigPictureCateCard(
+          onPress: _showDeleteDialog,
           title: "老北京涮肉 4 人餐",
           content: "套餐包括：羔羊肉，肥牛，香辣锅，鱼丸，炸灌肠，...",
           address: "南锣鼓巷",
@@ -312,6 +391,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         ScenicCard(
+          onPress: _showDeleteDialog,
           price: Text(
             "免费",
             style: TextStyle(
