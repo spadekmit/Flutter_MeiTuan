@@ -12,6 +12,143 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final GlobalKey<AnimatedListState> _listKey =
+      new GlobalKey<AnimatedListState>();
+  ListModel<Widget> _list;
+
+  @override
+  void initState() {
+    super.initState();
+
+    const title1 = <String>[
+      "美食",
+      "电影/演出",
+      "酒店住宿",
+      "休闲娱乐",
+      "外卖",
+    ];
+    const url1 = <String>[
+      "images/title/18.png",
+      "images/title/17.png",
+      "images/title/16.png",
+      "images/title/19.png",
+      "images/title/20.png",
+    ];
+    const title2 = <String>[
+      "亲子",
+      "健身/游泳",
+      "周边游/旅游",
+      "丽人/美发",
+      "超市/生鲜",
+    ];
+    const url2 = <String>[
+      "images/title/6.png",
+      "images/title/7.png",
+      "images/title/8.png",
+      "images/title/9.png",
+      "images/title/10.png",
+    ];
+    const title3 = <String>[
+      "医疗/牙科",
+      "生活服务",
+      "景点/门票",
+      "签到领现金",
+      "更多",
+    ];
+    const url3 = <String>[
+      "images/title/11.png",
+      "images/title/12.png",
+      "images/title/13.png",
+      "images/title/14.png",
+      "images/title/15.png",
+    ];
+
+    final screenWidth = MediaQuery.of(context).size.width;
+    _list = ListModel(listKey: _listKey, initialItems: <Widget>[
+      //第一行标题栏
+      Container(
+        padding: const EdgeInsets.only(
+            left: 15.0, right: 15.0, bottom: 5.0, top: 10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            MyImageButton(
+                image: Image.asset(
+                  url1[0],
+                  width: screenWidth / 7,
+                  height: screenWidth / 7,
+                ),
+                title: title1[0],
+                width: (screenWidth - 30) / 5.0),
+            MyImageButton(
+                image: Image.asset(
+                  url1[1],
+                  width: screenWidth / 7,
+                  height: screenWidth / 7,
+                ),
+                title: title1[1],
+                width: (screenWidth - 30) / 5.0),
+            MyImageButton(
+              image: Image.asset(
+                url1[2],
+                width: screenWidth / 7,
+                height: screenWidth / 7,
+              ),
+              title: title1[2],
+              width: (screenWidth - 30) / 5.0,
+              tip: "嗨抢",
+            ),
+            MyImageButton(
+                image: Image.asset(
+                  url1[3],
+                  width: screenWidth / 7,
+                  height: screenWidth / 7,
+                ),
+                title: title1[3],
+                tip: "网咖",
+                width: (screenWidth - 30) / 5.0),
+            MyImageButton(
+                image: Image.asset(
+                  url1[4],
+                  width: screenWidth / 7,
+                  height: screenWidth / 7,
+                ),
+                title: title1[4],
+                width: (screenWidth - 30) / 5.0),
+          ],
+        ),
+      ),
+      SizedBox(
+        height: 20.0,
+      ),
+      //第二行标题栏
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: _buildTitle(title2, url2, screenWidth / 14.0),
+        ),
+      ),
+      SizedBox(
+        height: 10.0,
+      ),
+      //第三行标题栏
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: _buildTitle(title3, url3, screenWidth / 14.0),
+        ),
+      ),
+      Container(
+          padding: const EdgeInsets.only(
+              left: 10.0, right: 10.0, top: 30.0, bottom: 0.0),
+          child: SlidesShowWidget(
+            height: 80,
+          )),
+    ]);
+  }
+
   ///主界面AppBar
   AppBar _buildHomeAppBar() {
     return AppBar(
@@ -111,10 +248,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildMyButton(String title) {
-    
     return GestureDetector(
       onTap: () => Navigator.of(context).pop(),
-          child: Container(
+      child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black, width: 0.5),
           color: Colors.white,
@@ -190,168 +326,48 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  List<Widget> _buildTitle(List<String> strs, List<String> urls, double width) {
+    List<Widget> titleList = <Widget>[];
+    for (int i = 0; i < strs.length; i++) {
+      titleList.add(MyImageButton(
+          image: Image.asset(
+            urls[i],
+            width: width,
+            height: width,
+          ),
+          title: strs[i],
+          width: (MediaQuery.of(context).size.width - 30) / 5.0));
+    }
+    return titleList;
+  }
+
+  
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
-    const title1 = <String>[
-      "美食",
-      "电影/演出",
-      "酒店住宿",
-      "休闲娱乐",
-      "外卖",
-    ];
-    const url1 = <String>[
-      "images/title/18.png",
-      "images/title/17.png",
-      "images/title/16.png",
-      "images/title/19.png",
-      "images/title/20.png",
-    ];
-    const title2 = <String>[
-      "亲子",
-      "健身/游泳",
-      "周边游/旅游",
-      "丽人/美发",
-      "超市/生鲜",
-    ];
-    const url2 = <String>[
-      "images/title/6.png",
-      "images/title/7.png",
-      "images/title/8.png",
-      "images/title/9.png",
-      "images/title/10.png",
-    ];
-    const title3 = <String>[
-      "医疗/牙科",
-      "生活服务",
-      "景点/门票",
-      "签到领现金",
-      "更多",
-    ];
-    const url3 = <String>[
-      "images/title/11.png",
-      "images/title/12.png",
-      "images/title/13.png",
-      "images/title/14.png",
-      "images/title/15.png",
-    ];
-
-    List<Widget> _buildTitle(
-        List<String> strs, List<String> urls, double width) {
-      List<Widget> titleList = <Widget>[];
-      for (int i = 0; i < strs.length; i++) {
-        titleList.add(MyImageButton(
-            image: Image.asset(
-              urls[i],
-              width: width,
-              height: width,
-            ),
-            title: strs[i],
-            width: (screenWidth - 30) / 5.0));
-      }
-      return titleList;
-    }
-
     List<Widget> _buildBody() {
       return <Widget>[
-        //第一行标题栏
-        Container(
-          padding: const EdgeInsets.only(
-              left: 15.0, right: 15.0, bottom: 5.0, top: 10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              MyImageButton(
-                  image: Image.asset(
-                    url1[0],
-                    width: screenWidth / 7,
-                    height: screenWidth / 7,
-                  ),
-                  title: title1[0],
-                  width: (screenWidth - 30) / 5.0),
-              MyImageButton(
-                  image: Image.asset(
-                    url1[1],
-                    width: screenWidth / 7,
-                    height: screenWidth / 7,
-                  ),
-                  title: title1[1],
-                  width: (screenWidth - 30) / 5.0),
-              MyImageButton(
-                image: Image.asset(
-                  url1[2],
-                  width: screenWidth / 7,
-                  height: screenWidth / 7,
-                ),
-                title: title1[2],
-                width: (screenWidth - 30) / 5.0,
-                tip: "嗨抢",
-              ),
-              MyImageButton(
-                  image: Image.asset(
-                    url1[3],
-                    width: screenWidth / 7,
-                    height: screenWidth / 7,
-                  ),
-                  title: title1[3],
-                  tip: "网咖",
-                  width: (screenWidth - 30) / 5.0),
-              MyImageButton(
-                  image: Image.asset(
-                    url1[4],
-                    width: screenWidth / 7,
-                    height: screenWidth / 7,
-                  ),
-                  title: title1[4],
-                  width: (screenWidth - 30) / 5.0),
+        SizeTransition(
+          axis: Axis.vertical,
+          child: ScenicCard(
+            onPress: _showDeleteDialog,
+            price: PriceText("5"),
+            score: "4.8分",
+            address: " | 东城区",
+            title: "故宫博物院（故宫) (5A)",
+            tags: <Widget>[
+              MyTag(tag: "网红地打卡"),
+              MyTag(tag: "帝王宫殿"),
+              MyTag(tag: "5A景点"),
+            ],
+            imageUrls: <String>[
+              "http://p0.meituan.net/travel/83544ca4b38bbe0f7644982c3528defd117921.jpg@660w_500h_1e_1c",
+              "http://p1.meituan.net/poi/e732ed2314a1a2619e6c3254fd2f1fd0112611.jpg",
+              "http://p0.meituan.net/poi/e7d94c4d609e5dd4d71bcea6a5eb0c5e220371.jpg"
             ],
           ),
-        ),
-        SizedBox(
-          height: 20.0,
-        ),
-        //第二行标题栏
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: _buildTitle(title2, url2, screenWidth / 14.0),
-          ),
-        ),
-        SizedBox(
-          height: 10.0,
-        ),
-        //第三行标题栏
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: _buildTitle(title3, url3, screenWidth / 14.0),
-          ),
-        ),
-        Container(
-            padding: const EdgeInsets.only(
-                left: 10.0, right: 10.0, top: 30.0, bottom: 0.0),
-            child: SlidesShowWidget(
-              height: 80,
-            )),
-        ScenicCard(
-          onPress: _showDeleteDialog,
-          price: PriceText("5"),
-          score: "4.8分",
-          address: " | 东城区",
-          title: "故宫博物院（故宫) (5A)",
-          tags: <Widget>[
-            MyTag(tag: "网红地打卡"),
-            MyTag(tag: "帝王宫殿"),
-            MyTag(tag: "5A景点"),
-          ],
-          imageUrls: <String>[
-            "http://p0.meituan.net/travel/83544ca4b38bbe0f7644982c3528defd117921.jpg@660w_500h_1e_1c",
-            "http://p1.meituan.net/poi/e732ed2314a1a2619e6c3254fd2f1fd0112611.jpg",
-            "http://p0.meituan.net/poi/e7d94c4d609e5dd4d71bcea6a5eb0c5e220371.jpg"
-          ],
         ),
         BigPictureCateCard(
           onPress: _showDeleteDialog,
@@ -420,4 +436,40 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+class ListModel<E> {
+  ListModel({
+    @required this.listKey,
+    @required this.removedItemBuilder,
+    Iterable<E> initialItems,
+  })  : assert(listKey != null),
+        assert(removedItemBuilder != null),
+        _items = new List<E>.from(initialItems ?? <E>[]);
+
+  final GlobalKey<AnimatedListState> listKey;
+  final dynamic removedItemBuilder;
+  final List<E> _items;
+
+  AnimatedListState get _animatedList => listKey.currentState;
+
+  void insert(int index, E item) {
+    _items.insert(index, item);
+    _animatedList.insertItem(index);
+  }
+
+  E removeAt(int index) {
+    final E removedItem = _items.removeAt(index);
+    if (removedItem != null) {
+      _animatedList.removeItem(index,
+          (BuildContext context, Animation<double> animation) {
+        return removedItemBuilder(removedItem, context, animation);
+      });
+    }
+    return removedItem;
+  }
+
+  int get length => _items.length;
+  E operator [](int index) => _items[index];
+  int indexOf(E item) => _items.indexOf(item);
 }
