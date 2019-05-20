@@ -14,8 +14,8 @@ Widget _buildImage(double width, double height, String url) {
 }
 
 class MyImageButton extends StatelessWidget {
-
-  MyImageButton({@required this.image, @required this.title, this.width, this.tip});
+  MyImageButton(
+      {@required this.image, @required this.title, this.width, this.tip});
 
   final Widget image;
   final String title;
@@ -31,7 +31,9 @@ class MyImageButton extends StatelessWidget {
           Center(
             child: Column(
               children: <Widget>[
-                SizedBox(height: 12,),
+                SizedBox(
+                  height: 12,
+                ),
                 image,
                 SizedBox(
                   height: 5.0,
@@ -45,7 +47,13 @@ class MyImageButton extends StatelessWidget {
           ),
           Align(
             alignment: Alignment.topRight,
-            child: tip != null ? MyTag(tag: tip, isEmphasize: true, radius: 15.0,) : null,
+            child: tip != null
+                ? MyTag(
+                    tag: tip,
+                    isEmphasize: true,
+                    radius: 15.0,
+                  )
+                : null,
           ),
         ],
       ),
@@ -112,6 +120,7 @@ class ScenicCard extends StatelessWidget {
       @required this.imageUrls,
       @required this.score,
       @required this.address,
+      this.onPress,
       this.tags = const <Widget>[]})
       : assert(imageUrls.length == 3);
 
@@ -121,6 +130,7 @@ class ScenicCard extends StatelessWidget {
   final List<String> imageUrls;
   final String score;
   final String address;
+  final VoidCallback onPress;
 
   @override
   Widget build(BuildContext context) {
@@ -147,25 +157,35 @@ class ScenicCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
       color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
+        padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
+                //粗体标题
                 Text(
                   title,
                   style: CardTitleTextStyle,
                 ),
-                Icon(
-                  Icons.highlight_off,
-                  size: 20.0,
+                //卡片删除图标
+                Container(
+                  height: 20,
+                  width: 20,
+                  child: IconButton(
+                    padding: EdgeInsets.zero,
+                    icon: Icon(
+                      Icons.highlight_off,
+                      size: 20.0,
+                    ),
+                    onPressed: onPress,
+                  ),
                 ),
               ],
             ),
             SizedBox(
-              height: 7.0,
+              height: 5,
             ),
             Row(
               children: <Widget>[
@@ -196,7 +216,9 @@ class ScenicCard extends StatelessWidget {
                 _buildImage(imageWidth, imageHeight, imageUrls[2]),
               ],
             ),
-            SizedBox(height: 15,)
+            SizedBox(
+              height: 15,
+            )
           ],
         ),
       ),
@@ -211,6 +233,7 @@ class BigPictureCateCard extends StatelessWidget {
       @required this.imageUrls,
       @required this.content,
       @required this.address,
+      this.onPress,
       this.tags = const <Widget>[]})
       : assert(imageUrls.length == 3);
 
@@ -220,6 +243,7 @@ class BigPictureCateCard extends StatelessWidget {
   final List<String> imageUrls;
   final String content;
   final String address;
+  final VoidCallback onPress;
 
   @override
   Widget build(BuildContext context) {
@@ -246,7 +270,7 @@ class BigPictureCateCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
       color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.only(top: 15.0, left: 10.0, right: 10.0),
+        padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -258,16 +282,23 @@ class BigPictureCateCard extends StatelessWidget {
                   title,
                   style: CardTitleTextStyle,
                 ),
-                Icon(
-                  Icons.highlight_off,
-                  size: 20.0,
+                Container(
+                  height: 20,
+                  width: 20,
+                  child: IconButton(
+                    padding: EdgeInsets.zero,
+                    icon: Icon(
+                      Icons.highlight_off,
+                      size: 20.0,
+                    ),
+                    onPressed: onPress,
+                  ),
                 ),
               ],
             ),
             SizedBox(
-              height: 7.0,
+              height: 5.0,
             ),
-
             ///套餐包含与地址
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -310,7 +341,9 @@ class BigPictureCateCard extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 15,)
+            SizedBox(
+              height: 15,
+            )
           ],
         ),
       ),

@@ -110,6 +110,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void _showDeleteMenu() {
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -175,6 +179,7 @@ class _HomePageState extends State<HomePage> {
 
     List<Widget> _buildBody() {
       return <Widget>[
+        //第一行标题栏
         Container(
           padding: const EdgeInsets.only(
               left: 15.0, right: 15.0, bottom: 5.0, top: 10.0),
@@ -230,6 +235,7 @@ class _HomePageState extends State<HomePage> {
         SizedBox(
           height: 20.0,
         ),
+        //第二行标题栏
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Row(
@@ -240,6 +246,7 @@ class _HomePageState extends State<HomePage> {
         SizedBox(
           height: 10.0,
         ),
+        //第三行标题栏
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Row(
