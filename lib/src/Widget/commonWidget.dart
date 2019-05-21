@@ -1,17 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_meituan/src/Style/myTheme.dart';
-
-Widget _buildImage(double width, double height, String url) {
-  return ClipRRect(
-    borderRadius: BorderRadius.circular(8.0),
-    child: Image.network(
-      url,
-      fit: BoxFit.fitHeight,
-      width: width,
-      height: height,
-    ),
-  );
-}
+import 'package:flutter_meituan/src/Widget/recommendedCard.dart';
 
 class MyImageButton extends StatelessWidget {
   MyImageButton(
@@ -113,240 +101,55 @@ class MyTag extends StatelessWidget {
   }
 }
 
-class ScenicCard extends StatelessWidget {
-  ScenicCard(
-      {@required this.price,
-      @required this.title,
-      @required this.imageUrls,
-      @required this.score,
-      @required this.address,
-      this.onPress,
-      this.tags = const <Widget>[]})
-      : assert(imageUrls.length == 3);
+class ListModel<Widget> {
+  ListModel({
+    @required this.listKey,
+    @required this.removedItemBuilder,
+    Iterable<Widget> initialItems,
+  })  : assert(listKey != null),
+        assert(removedItemBuilder != null),
+        _items = new List<Widget>.from(initialItems ?? <Widget>[]);
 
-  final Widget price;
-  final List<Widget> tags;
-  final String title;
-  final List<String> imageUrls;
-  final String score;
-  final String address;
-  final VoidCallback onPress;
+  final GlobalKey<AnimatedListState> listKey;
+  final dynamic removedItemBuilder;
+  final List<Widget> _items;
 
-  @override
-  Widget build(BuildContext context) {
-    final imageWidth = (MediaQuery.of(context).size.width - 60.0) / 3.0;
-    final imageHeight = imageWidth - 20.0;
-    final tagList = <Widget>[
-      price,
-    ];
+  AnimatedListState get _animatedList => listKey.currentState;
+  int get length => _items.length;
+  Widget operator [](int index) => _items[index];
+  int indexOf(Widget item) => _items.indexOf(item);
 
-    if (tags.length > 0) {
-      tags.forEach((tag) {
-        tagList.add(SizedBox(
-          width: 5.0,
-        ));
-        tagList.add(tag);
-      });
-    }
-
-    return Card(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(15.0)),
-      ),
-      elevation: 0.0,
-      margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-      color: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                //粗体标题
-                Text(
-                  title,
-                  style: CardTitleTextStyle,
-                ),
-                //卡片删除图标
-                Container(
-                  height: 20,
-                  width: 20,
-                  child: IconButton(
-                    padding: EdgeInsets.zero,
-                    icon: Icon(
-                      Icons.highlight_off,
-                      size: 20.0,
-                    ),
-                    onPressed: onPress,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: <Widget>[
-                Text(
-                  score,
-                  style: GradeTextStyle,
-                ),
-                Text(
-                  address,
-                  style: BehindGradeTextStyle,
-                )
-              ],
-            ),
-            SizedBox(
-              height: 7.0,
-            ),
-            Row(
-              children: tagList,
-            ),
-            SizedBox(
-              height: 7.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                _buildImage(imageWidth, imageHeight, imageUrls[0]),
-                _buildImage(imageWidth, imageHeight, imageUrls[1]),
-                _buildImage(imageWidth, imageHeight, imageUrls[2]),
-              ],
-            ),
-            SizedBox(
-              height: 15,
-            )
-          ],
-        ),
-      ),
-    );
+  void insert(int index, Widget item) {
+    _items.insert(index, item);
+    _animatedList.insertItem(index);
   }
-}
 
-class BigPictureCateCard extends StatelessWidget {
-  BigPictureCateCard(
-      {@required this.price,
-      @required this.title,
-      @required this.imageUrls,
-      @required this.content,
-      @required this.address,
-      this.onPress,
-      this.tags = const <Widget>[]})
-      : assert(imageUrls.length == 3);
-
-  final Widget price;
-  final List<Widget> tags;
-  final String title;
-  final List<String> imageUrls;
-  final String content;
-  final String address;
-  final VoidCallback onPress;
-
-  @override
-  Widget build(BuildContext context) {
-    final imageWidth = (MediaQuery.of(context).size.width - 60.0) / 3.0;
-    final imageHeight = imageWidth - 20.0;
-    final tagList = <Widget>[
-      price,
-    ];
-
-    if (tags.length > 0) {
-      tags.forEach((tag) {
-        tagList.add(SizedBox(
-          width: 5.0,
-        ));
-        tagList.add(tag);
+  Widget removeAt(int index) {
+    final Widget removedItem = _items.removeAt(index);
+    if (removedItem != null) {
+      _animatedList.removeItem(index,
+          (BuildContext context, Animation<double> animation) {
+        return removedItemBuilder(removedItem, context, animation);
       });
     }
+    return removedItem;
+  }
 
-    return Card(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(15.0)),
-      ),
-      elevation: 0.0,
-      margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-      color: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            ///标题
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  title,
-                  style: CardTitleTextStyle,
-                ),
-                Container(
-                  height: 20,
-                  width: 20,
-                  child: IconButton(
-                    padding: EdgeInsets.zero,
-                    icon: Icon(
-                      Icons.highlight_off,
-                      size: 20.0,
-                    ),
-                    onPressed: onPress,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            ///套餐包含与地址
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(
-                  width: MediaQuery.of(context).size.width - 100,
-                  child: Text(
-                    content,
-                    style: BehindGradeTextStyle,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                Text(
-                  address,
-                  style: BehindGradeTextStyle,
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 7.0,
-            ),
-
-            ///价格与标签
-            Row(
-              children: tagList,
-            ),
-            SizedBox(
-              height: 7.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                _buildImage(imageWidth * 2, imageHeight * 2, imageUrls[0]),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    _buildImage(imageWidth, imageHeight, imageUrls[1]),
-                    _buildImage(imageWidth, imageHeight, imageUrls[2]),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 15,
-            )
-          ],
-        ),
-      ),
-    );
+  Widget removeByIndex(int index) {
+    int rIndex;
+    for (int i = 6; i < _items.length; i++) {
+      RecommendedCard card = _items[i] as RecommendedCard;
+      if (card.index == index) {
+        rIndex = i;
+      }
+    }
+    final Widget removedItem = _items.removeAt(rIndex);
+    if (removedItem != null) {
+      _animatedList.removeItem(rIndex,
+          (BuildContext context, Animation<double> animation) {
+        return removedItemBuilder(removedItem, context, animation);
+      });
+    }
+    return removedItem;
   }
 }

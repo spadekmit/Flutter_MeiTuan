@@ -10,6 +10,7 @@ class FindPage extends StatefulWidget {
 }
 
 class _FindPageState extends State<FindPage> {
+
   Widget _buildBody(int index) {
     var rng = Random();
     switch (index) {
@@ -23,13 +24,14 @@ class _FindPageState extends State<FindPage> {
           mainAxisSpacing: 4.0,
           crossAxisSpacing: 4.0,
         );
+        // return Center(child: Text("test"),);
         break;
       default:
         return StaggeredGridView.countBuilder(
           crossAxisCount: 2,
           itemCount: 12,
           itemBuilder: (BuildContext context, int index) => VideoCard(),
-          staggeredTileBuilder: (int index) => StaggeredTile.count(1, 1.8),
+          staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
           mainAxisSpacing: 4.0,
           crossAxisSpacing: 4.0,
         );

@@ -4,9 +4,14 @@ import 'package:flutter_meituan/src/Route/searchPage.dart';
 import 'package:flutter_meituan/src/Route/testPage.dart';
 import 'package:flutter_meituan/src/Style/myTheme.dart';
 import 'package:flutter_meituan/src/Widget/commonWidget.dart';
+import 'package:flutter_meituan/src/Widget/recommendedCard.dart';
 import 'package:flutter_meituan/src/Widget/slidesShow.dart';
 
 class HomePage extends StatefulWidget {
+  HomePage({@required this.screenWidth});
+
+  final double screenWidth;
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -15,11 +20,118 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey<AnimatedListState> _listKey =
       new GlobalKey<AnimatedListState>();
   ListModel<Widget> _list;
+  ScrollController _controller;
+  int count;
+  bool isRefreshing;
 
   @override
   void initState() {
     super.initState();
-
+    isRefreshing = false;
+    _controller = ScrollController();
+    _controller.addListener(() {
+      if (_controller.position.pixels == _controller.position.maxScrollExtent &&
+          !this.isRefreshing) {
+        setState(() {
+         isRefreshing = true; 
+         _list.insert(_list.length, Container(height: 50, child: Center(child: CupertinoActivityIndicator()),));
+         _controller.jumpTo(_controller.position.maxScrollExtent);
+        });
+        
+        Future.delayed(Duration(seconds: 2), () {
+          _list.removeAt(_list.length - 1);
+          _list.insert(
+            _list.length,
+            ScenicCard(
+              index: count++,
+              onDelete: _showDeleteDialog,
+              price: PriceText("5"),
+              score: "4.8分",
+              address: " | 东城区",
+              title: "故宫博物院（故宫) (5A)",
+              tags: <Widget>[
+                MyTag(tag: "网红地打卡"),
+                MyTag(tag: "帝王宫殿"),
+                MyTag(tag: "5A景点"),
+              ],
+              imageUrls: <String>[
+                "http://p0.meituan.net/travel/83544ca4b38bbe0f7644982c3528defd117921.jpg@660w_500h_1e_1c",
+                "http://p1.meituan.net/poi/e732ed2314a1a2619e6c3254fd2f1fd0112611.jpg",
+                "http://p0.meituan.net/poi/e7d94c4d609e5dd4d71bcea6a5eb0c5e220371.jpg"
+              ],
+            ),
+          );
+          _list.insert(
+            _list.length,
+            BigPictureCateCard(
+              index: count++,
+              onDelete: _showDeleteDialog,
+              title: "老北京涮肉 4 人餐",
+              content: "套餐包括：羔羊肉，肥牛，香辣锅，鱼丸，炸灌肠，...",
+              address: "南锣鼓巷",
+              price: RichText(
+                text: TextSpan(children: <TextSpan>[
+                  TextSpan(
+                      text: "￥",
+                      style: TextStyle(fontSize: 10.0, color: Colors.red)),
+                  TextSpan(
+                      text: "139",
+                      style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold)),
+                  TextSpan(
+                      text: "￥190",
+                      style: TextStyle(
+                          decoration: TextDecoration.lineThrough,
+                          color: Colors.black,
+                          fontSize: 10.0))
+                ]),
+              ),
+              tags: <Widget>[
+                MyTag(
+                  tag: "5.7折",
+                  isEmphasize: true,
+                ),
+                MyTag(tag: "销量火爆")
+              ],
+              imageUrls: <String>[
+                "http://p1.meituan.net/deal/87d9fbf3dba19daf2becbca8c8daee74145248.jpg@428w_320h_1e_1c",
+                "http://p0.meituan.net/deal/2d65c591c7b02f9ca9bc61f667262319220693.jpg@428w_320h_1e_1c",
+                "http://p1.meituan.net/deal/4aea58490b74263d7170177fe3ab9f4c26990.jpg@428w_320h_1e_1c"
+              ],
+            ),
+          );
+          _list.insert(
+            _list.length,
+            ScenicCard(
+              index: count++,
+              onDelete: _showDeleteDialog,
+              price: Text(
+                "免费",
+                style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 10.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              score: "4.6分",
+              address: " | 后海/什刹海",
+              title: "后海",
+              tags: <Widget>[MyTag(tag: "城市地标"), MyTag(tag: "陪爸妈")],
+              imageUrls: <String>[
+                "https://p1.meituan.net/hotel/828cc5794f92e40c5de5182cb1b30993316981.jpg@220w_125h_1e_1c",
+                "http://p1.meituan.net/hoteltdc/998c2b9face5e48942e10b90bf42803a154752.jpg",
+                "http://p0.meituan.net/hotel/aaa8a7aed2ce2fe43aea50d6616293b2119956.jpg"
+              ],
+            ),
+          );
+          setState(() {
+           isRefreshing = false; 
+          });
+        });
+      }
+    });
+    count = 6;
     const title1 = <String>[
       "美食",
       "电影/演出",
@@ -63,90 +175,171 @@ class _HomePageState extends State<HomePage> {
       "images/title/15.png",
     ];
 
-    final screenWidth = MediaQuery.of(context).size.width;
-    _list = ListModel(listKey: _listKey, initialItems: <Widget>[
-      //第一行标题栏
-      Container(
-        padding: const EdgeInsets.only(
-            left: 15.0, right: 15.0, bottom: 5.0, top: 10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            MyImageButton(
-                image: Image.asset(
-                  url1[0],
-                  width: screenWidth / 7,
-                  height: screenWidth / 7,
+    final screenWidth = widget.screenWidth; //按照当前设备屏幕宽度调整图标大小
+    _list = ListModel(
+        listKey: _listKey,
+        removedItemBuilder: _buildRemovedItem,
+        initialItems: <Widget>[
+          //第一行标题栏
+          Container(
+            padding: const EdgeInsets.only(
+                left: 15.0, right: 15.0, bottom: 5.0, top: 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                MyImageButton(
+                    image: Image.asset(
+                      url1[0],
+                      width: screenWidth / 7,
+                      height: screenWidth / 7,
+                    ),
+                    title: title1[0],
+                    width: (screenWidth - 30) / 5.0),
+                MyImageButton(
+                    image: Image.asset(
+                      url1[1],
+                      width: screenWidth / 7,
+                      height: screenWidth / 7,
+                    ),
+                    title: title1[1],
+                    width: (screenWidth - 30) / 5.0),
+                MyImageButton(
+                  image: Image.asset(
+                    url1[2],
+                    width: screenWidth / 7,
+                    height: screenWidth / 7,
+                  ),
+                  title: title1[2],
+                  width: (screenWidth - 30) / 5.0,
+                  tip: "嗨抢",
                 ),
-                title: title1[0],
-                width: (screenWidth - 30) / 5.0),
-            MyImageButton(
-                image: Image.asset(
-                  url1[1],
-                  width: screenWidth / 7,
-                  height: screenWidth / 7,
-                ),
-                title: title1[1],
-                width: (screenWidth - 30) / 5.0),
-            MyImageButton(
-              image: Image.asset(
-                url1[2],
-                width: screenWidth / 7,
-                height: screenWidth / 7,
-              ),
-              title: title1[2],
-              width: (screenWidth - 30) / 5.0,
-              tip: "嗨抢",
+                MyImageButton(
+                    image: Image.asset(
+                      url1[3],
+                      width: screenWidth / 7,
+                      height: screenWidth / 7,
+                    ),
+                    title: title1[3],
+                    tip: "网咖",
+                    width: (screenWidth - 30) / 5.0),
+                MyImageButton(
+                    image: Image.asset(
+                      url1[4],
+                      width: screenWidth / 7,
+                      height: screenWidth / 7,
+                    ),
+                    title: title1[4],
+                    width: (screenWidth - 30) / 5.0),
+              ],
             ),
-            MyImageButton(
-                image: Image.asset(
-                  url1[3],
-                  width: screenWidth / 7,
-                  height: screenWidth / 7,
-                ),
-                title: title1[3],
-                tip: "网咖",
-                width: (screenWidth - 30) / 5.0),
-            MyImageButton(
-                image: Image.asset(
-                  url1[4],
-                  width: screenWidth / 7,
-                  height: screenWidth / 7,
-                ),
-                title: title1[4],
-                width: (screenWidth - 30) / 5.0),
-          ],
-        ),
-      ),
-      SizedBox(
-        height: 20.0,
-      ),
-      //第二行标题栏
-      Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: _buildTitle(title2, url2, screenWidth / 14.0),
-        ),
-      ),
-      SizedBox(
-        height: 10.0,
-      ),
-      //第三行标题栏
-      Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: _buildTitle(title3, url3, screenWidth / 14.0),
-        ),
-      ),
-      Container(
-          padding: const EdgeInsets.only(
-              left: 10.0, right: 10.0, top: 30.0, bottom: 0.0),
-          child: SlidesShowWidget(
-            height: 80,
-          )),
-    ]);
+          ),
+          SizedBox(
+            height: 20.0,
+          ),
+          //第二行标题栏
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children:
+                  _buildTitle(title2, url2, screenWidth / 14.0, screenWidth),
+            ),
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+          //第三行标题栏
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children:
+                  _buildTitle(title3, url3, screenWidth / 14.0, screenWidth),
+            ),
+          ),
+          Container(
+              padding: const EdgeInsets.only(
+                  left: 10.0, right: 10.0, top: 30.0, bottom: 0.0),
+              child: SlidesShowWidget(
+                height: 80,
+              )),
+          ScenicCard(
+            index: count++,
+            onDelete: _showDeleteDialog,
+            price: PriceText("5"),
+            score: "4.8分",
+            address: " | 东城区",
+            title: "故宫博物院（故宫) (5A)",
+            tags: <Widget>[
+              MyTag(tag: "网红地打卡"),
+              MyTag(tag: "帝王宫殿"),
+              MyTag(tag: "5A景点"),
+            ],
+            imageUrls: <String>[
+              "http://p0.meituan.net/travel/83544ca4b38bbe0f7644982c3528defd117921.jpg@660w_500h_1e_1c",
+              "http://p1.meituan.net/poi/e732ed2314a1a2619e6c3254fd2f1fd0112611.jpg",
+              "http://p0.meituan.net/poi/e7d94c4d609e5dd4d71bcea6a5eb0c5e220371.jpg"
+            ],
+          ),
+          BigPictureCateCard(
+            index: count++,
+            onDelete: _showDeleteDialog,
+            title: "老北京涮肉 4 人餐",
+            content: "套餐包括：羔羊肉，肥牛，香辣锅，鱼丸，炸灌肠，...",
+            address: "南锣鼓巷",
+            price: RichText(
+              text: TextSpan(children: <TextSpan>[
+                TextSpan(
+                    text: "￥",
+                    style: TextStyle(fontSize: 10.0, color: Colors.red)),
+                TextSpan(
+                    text: "139",
+                    style: TextStyle(
+                        fontSize: 15.0,
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold)),
+                TextSpan(
+                    text: "￥190",
+                    style: TextStyle(
+                        decoration: TextDecoration.lineThrough,
+                        color: Colors.black,
+                        fontSize: 10.0))
+              ]),
+            ),
+            tags: <Widget>[
+              MyTag(
+                tag: "5.7折",
+                isEmphasize: true,
+              ),
+              MyTag(tag: "销量火爆")
+            ],
+            imageUrls: <String>[
+              "http://p1.meituan.net/deal/87d9fbf3dba19daf2becbca8c8daee74145248.jpg@428w_320h_1e_1c",
+              "http://p0.meituan.net/deal/2d65c591c7b02f9ca9bc61f667262319220693.jpg@428w_320h_1e_1c",
+              "http://p1.meituan.net/deal/4aea58490b74263d7170177fe3ab9f4c26990.jpg@428w_320h_1e_1c"
+            ],
+          ),
+          ScenicCard(
+            index: count++,
+            onDelete: _showDeleteDialog,
+            price: Text(
+              "免费",
+              style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 10.0,
+                  fontWeight: FontWeight.bold),
+            ),
+            score: "4.6分",
+            address: " | 后海/什刹海",
+            title: "后海",
+            tags: <Widget>[MyTag(tag: "城市地标"), MyTag(tag: "陪爸妈")],
+            imageUrls: <String>[
+              "https://p1.meituan.net/hotel/828cc5794f92e40c5de5182cb1b30993316981.jpg@220w_125h_1e_1c",
+              "http://p1.meituan.net/hoteltdc/998c2b9face5e48942e10b90bf42803a154752.jpg",
+              "http://p0.meituan.net/hotel/aaa8a7aed2ce2fe43aea50d6616293b2119956.jpg"
+            ],
+          ),
+        ]);
   }
 
   ///主界面AppBar
@@ -247,9 +440,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildMyButton(String title) {
+  Widget _buildMyButton(String title, int index) {
     return GestureDetector(
-      onTap: () => Navigator.of(context).pop(),
+      onTap: () {
+        _list.removeAt(index);
+        Navigator.of(context).pop();
+      },
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black, width: 0.5),
@@ -269,7 +465,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _showDeleteDialog() {
+  void _showDeleteDialog(int index) {
     var dialog = SimpleDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       titlePadding: EdgeInsets.only(top: 20),
@@ -286,15 +482,15 @@ class _HomePageState extends State<HomePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              _buildMyButton("去过了"),
+              _buildMyButton("去过了", index),
               SizedBox(
                 width: 10,
               ),
-              _buildMyButton("不感兴趣"),
+              _buildMyButton("不感兴趣", index),
               SizedBox(
                 width: 10,
               ),
-              _buildMyButton("价格不合适"),
+              _buildMyButton("价格不合适", index),
             ],
           ),
           SizedBox(
@@ -312,7 +508,10 @@ class _HomePageState extends State<HomePage> {
                   "不感兴趣",
                   style: TextStyle(fontSize: 12, color: Colors.teal),
                 ),
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () {
+                  _list.removeAt(index);
+                  Navigator.of(context).pop();
+                },
               ),
             ),
           )
@@ -326,7 +525,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  List<Widget> _buildTitle(List<String> strs, List<String> urls, double width) {
+  List<Widget> _buildTitle(
+      List<String> strs, List<String> urls, double width, double screenWidth) {
     List<Widget> titleList = <Widget>[];
     for (int i = 0; i < strs.length; i++) {
       titleList.add(MyImageButton(
@@ -336,140 +536,42 @@ class _HomePageState extends State<HomePage> {
             height: width,
           ),
           title: strs[i],
-          width: (MediaQuery.of(context).size.width - 30) / 5.0));
+          width: (screenWidth - 30) / 5.0));
     }
     return titleList;
   }
 
-  
+  Widget _buildRemovedItem(
+      Widget widget, BuildContext context, Animation<double> animation) {
+    return SizeTransition(
+      axis: Axis.vertical,
+      sizeFactor: animation,
+      child: widget,
+    );
+  }
+
+  Widget _buildItem(
+      BuildContext context, int index, Animation<double> animation) {
+    return SizeTransition(
+      axis: Axis.vertical,
+      sizeFactor: animation,
+      child: _list[index],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    List<Widget> _buildBody() {
-      return <Widget>[
-        SizeTransition(
-          axis: Axis.vertical,
-          child: ScenicCard(
-            onPress: _showDeleteDialog,
-            price: PriceText("5"),
-            score: "4.8分",
-            address: " | 东城区",
-            title: "故宫博物院（故宫) (5A)",
-            tags: <Widget>[
-              MyTag(tag: "网红地打卡"),
-              MyTag(tag: "帝王宫殿"),
-              MyTag(tag: "5A景点"),
-            ],
-            imageUrls: <String>[
-              "http://p0.meituan.net/travel/83544ca4b38bbe0f7644982c3528defd117921.jpg@660w_500h_1e_1c",
-              "http://p1.meituan.net/poi/e732ed2314a1a2619e6c3254fd2f1fd0112611.jpg",
-              "http://p0.meituan.net/poi/e7d94c4d609e5dd4d71bcea6a5eb0c5e220371.jpg"
-            ],
-          ),
-        ),
-        BigPictureCateCard(
-          onPress: _showDeleteDialog,
-          title: "老北京涮肉 4 人餐",
-          content: "套餐包括：羔羊肉，肥牛，香辣锅，鱼丸，炸灌肠，...",
-          address: "南锣鼓巷",
-          price: RichText(
-            text: TextSpan(children: <TextSpan>[
-              TextSpan(
-                  text: "￥",
-                  style: TextStyle(fontSize: 10.0, color: Colors.red)),
-              TextSpan(
-                  text: "139",
-                  style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold)),
-              TextSpan(
-                  text: "￥190",
-                  style: TextStyle(
-                      decoration: TextDecoration.lineThrough,
-                      color: Colors.black,
-                      fontSize: 10.0))
-            ]),
-          ),
-          tags: <Widget>[
-            MyTag(
-              tag: "5.7折",
-              isEmphasize: true,
-            ),
-            MyTag(tag: "销量火爆")
-          ],
-          imageUrls: <String>[
-            "http://p1.meituan.net/deal/87d9fbf3dba19daf2becbca8c8daee74145248.jpg@428w_320h_1e_1c",
-            "http://p0.meituan.net/deal/2d65c591c7b02f9ca9bc61f667262319220693.jpg@428w_320h_1e_1c",
-            "http://p1.meituan.net/deal/4aea58490b74263d7170177fe3ab9f4c26990.jpg@428w_320h_1e_1c"
-          ],
-        ),
-        ScenicCard(
-          onPress: _showDeleteDialog,
-          price: Text(
-            "免费",
-            style: TextStyle(
-                color: Colors.red, fontSize: 10.0, fontWeight: FontWeight.bold),
-          ),
-          score: "4.6分",
-          address: " | 后海/什刹海",
-          title: "后海",
-          tags: <Widget>[MyTag(tag: "城市地标"), MyTag(tag: "陪爸妈")],
-          imageUrls: <String>[
-            "https://p1.meituan.net/hotel/828cc5794f92e40c5de5182cb1b30993316981.jpg@220w_125h_1e_1c",
-            "http://p1.meituan.net/hoteltdc/998c2b9face5e48942e10b90bf42803a154752.jpg",
-            "http://p0.meituan.net/hotel/aaa8a7aed2ce2fe43aea50d6616293b2119956.jpg"
-          ],
-        ),
-      ];
-    }
-
     return Scaffold(
       appBar: _buildHomeAppBar(),
       body: Container(
         decoration: GradientDecoration,
-        child: ListView(
-          children: _buildBody(),
+        child: AnimatedList(
+          controller: _controller,
+          key: _listKey,
+          initialItemCount: _list.length,
+          itemBuilder: _buildItem,
         ),
       ),
     );
   }
-}
-
-class ListModel<E> {
-  ListModel({
-    @required this.listKey,
-    @required this.removedItemBuilder,
-    Iterable<E> initialItems,
-  })  : assert(listKey != null),
-        assert(removedItemBuilder != null),
-        _items = new List<E>.from(initialItems ?? <E>[]);
-
-  final GlobalKey<AnimatedListState> listKey;
-  final dynamic removedItemBuilder;
-  final List<E> _items;
-
-  AnimatedListState get _animatedList => listKey.currentState;
-
-  void insert(int index, E item) {
-    _items.insert(index, item);
-    _animatedList.insertItem(index);
-  }
-
-  E removeAt(int index) {
-    final E removedItem = _items.removeAt(index);
-    if (removedItem != null) {
-      _animatedList.removeItem(index,
-          (BuildContext context, Animation<double> animation) {
-        return removedItemBuilder(removedItem, context, animation);
-      });
-    }
-    return removedItem;
-  }
-
-  int get length => _items.length;
-  E operator [](int index) => _items[index];
-  int indexOf(E item) => _items.indexOf(item);
 }

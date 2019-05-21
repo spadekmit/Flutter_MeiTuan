@@ -9,6 +9,7 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
+
   Widget _buildTile(String top, String mid, String bot, {String tip}) {
     return Container(
       height: 90.0,
@@ -240,10 +241,11 @@ class _UserPageState extends State<UserPage> {
               ),
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                    const EdgeInsets.only(left: 20, right: 20, top: 14),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+
                     Row(
                       children: <Widget>[
                         Text(
@@ -263,6 +265,7 @@ class _UserPageState extends State<UserPage> {
                         )
                       ],
                     ),
+                    
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 5.0, horizontal: 10),
@@ -279,6 +282,7 @@ class _UserPageState extends State<UserPage> {
                       color: Colors.black,
                       height: 1.0,
                     ),
+                    
                     Container(
                         padding: EdgeInsets.symmetric(vertical: 8.0),
                         child: SlidesShowWidget(
@@ -291,6 +295,7 @@ class _UserPageState extends State<UserPage> {
                     SizedBox(
                       height: 15.0,
                     ),
+                    
                     Text(
                       "推荐工具",
                       style: CardTitleTextStyle,
@@ -298,16 +303,13 @@ class _UserPageState extends State<UserPage> {
                     SizedBox(
                       height: 10,
                     ),
-                    Container(
-                      height: 200,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          _buildRow(list1),
-                          _buildRow(list2),
-                          _buildRow(list3),
-                        ],
-                      ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        _buildRow(list1),
+                        _buildRow(list2),
+                        _buildRow(list3),
+                      ],
                     ),
                   ],
                 ),
