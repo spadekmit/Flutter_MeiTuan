@@ -13,31 +13,15 @@ Widget _buildImage(double width, double height, String url) {
   );
 }
 
-class RecommendedCard extends StatelessWidget {
-
-  RecommendedCard({@required this.index});
-
-  final int index;
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return null;
-  }
-  
-}
-
-class ScenicCard extends RecommendedCard {
+class ScenicCard extends StatelessWidget {
   ScenicCard(
       {@required this.price,
-      @required int index,
       @required this.title,
       @required this.imageUrls,
       @required this.score,
       @required this.address,
       this.onDelete,
-      this.tags = const <Widget>[]})
-      : super(index: index);
+      this.tags = const <Widget>[]});
 
   final Widget price;
   final List<Widget> tags;
@@ -94,7 +78,7 @@ class ScenicCard extends RecommendedCard {
                       Icons.highlight_off,
                       size: 20.0,
                     ),
-                    onPressed: () => onDelete(index),
+                    onPressed: () => onDelete(this),
                   ),
                 ),
               ],
@@ -141,17 +125,15 @@ class ScenicCard extends RecommendedCard {
   }
 }
 
-class BigPictureCateCard extends RecommendedCard {
+class BigPictureCateCard extends StatelessWidget {
   BigPictureCateCard(
       {@required this.price,
-      @required int index,
       @required this.title,
       @required this.imageUrls,
       @required this.content,
       @required this.address,
       this.onDelete,
-      this.tags = const <Widget>[]})
-      : super(index: index);
+      this.tags = const <Widget>[]});
 
   final Widget price;
   final List<Widget> tags;
@@ -207,7 +189,7 @@ class BigPictureCateCard extends RecommendedCard {
                       Icons.highlight_off,
                       size: 20.0,
                     ),
-                    onPressed: () => onDelete(index),
+                    onPressed: () => onDelete(this),
                   ),
                 ),
               ],

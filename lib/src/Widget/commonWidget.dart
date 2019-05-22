@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_meituan/src/Widget/recommendedCard.dart';
 
 class MyImageButton extends StatelessWidget {
   MyImageButton(
@@ -98,58 +97,5 @@ class MyTag extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class ListModel<Widget> {
-  ListModel({
-    @required this.listKey,
-    @required this.removedItemBuilder,
-    Iterable<Widget> initialItems,
-  })  : assert(listKey != null),
-        assert(removedItemBuilder != null),
-        _items = new List<Widget>.from(initialItems ?? <Widget>[]);
-
-  final GlobalKey<AnimatedListState> listKey;
-  final dynamic removedItemBuilder;
-  final List<Widget> _items;
-
-  AnimatedListState get _animatedList => listKey.currentState;
-  int get length => _items.length;
-  Widget operator [](int index) => _items[index];
-  int indexOf(Widget item) => _items.indexOf(item);
-
-  void insert(int index, Widget item) {
-    _items.insert(index, item);
-    _animatedList.insertItem(index);
-  }
-
-  Widget removeAt(int index) {
-    final Widget removedItem = _items.removeAt(index);
-    if (removedItem != null) {
-      _animatedList.removeItem(index,
-          (BuildContext context, Animation<double> animation) {
-        return removedItemBuilder(removedItem, context, animation);
-      });
-    }
-    return removedItem;
-  }
-
-  Widget removeByIndex(int index) {
-    int rIndex;
-    for (int i = 6; i < _items.length; i++) {
-      RecommendedCard card = _items[i] as RecommendedCard;
-      if (card.index == index) {
-        rIndex = i;
-      }
-    }
-    final Widget removedItem = _items.removeAt(rIndex);
-    if (removedItem != null) {
-      _animatedList.removeItem(rIndex,
-          (BuildContext context, Animation<double> animation) {
-        return removedItemBuilder(removedItem, context, animation);
-      });
-    }
-    return removedItem;
   }
 }
