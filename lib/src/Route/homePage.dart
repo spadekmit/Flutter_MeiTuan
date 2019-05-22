@@ -77,6 +77,7 @@ class _HomePageState extends State<HomePage> {
 
   ///主界面AppBar
   AppBar _buildHomeAppBar() {
+    
     return AppBar(
       automaticallyImplyLeading: false,
       elevation: 0.0,
@@ -87,6 +88,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             InkWell(
+              borderRadius: BorderRadius.circular(45),
               onTap: () => Navigator.of(context)
                   .push(CupertinoPageRoute(builder: (context) => TestPage())),
               child: Padding(
