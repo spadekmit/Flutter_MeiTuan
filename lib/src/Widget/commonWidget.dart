@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_meituan/src/Route/testPage.dart';
 
 class MyImageButton extends StatelessWidget {
   MyImageButton(
@@ -11,38 +13,42 @@ class MyImageButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      child: Stack(
-        children: <Widget>[
-          Center(
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 12,
-                ),
-                image,
-                SizedBox(
-                  height: 5.0,
-                ),
-                Text(
-                  title,
-                  style: TextStyle(fontSize: 12.0),
-                )
-              ],
-            ),
-          ),
-          Align(
-            alignment: Alignment.topRight,
-            child: tip != null
-                ? MyTag(
-                    tag: tip,
-                    isEmphasize: true,
-                    radius: 15.0,
+    return InkWell(
+      onTap: () => Navigator.of(context).push(CupertinoPageRoute(builder: (context) => TestPage())),
+      splashColor: Colors.grey,
+      child: Container(
+        width: width,
+        child: Stack(
+          children: <Widget>[
+            Center(
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: 12,
+                  ),
+                  image,
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Text(
+                    title,
+                    style: TextStyle(fontSize: 12.0),
                   )
-                : null,
-          ),
-        ],
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: tip != null
+                  ? MyTag(
+                      tag: tip,
+                      isEmphasize: true,
+                      radius: 15.0,
+                    )
+                  : null,
+            ),
+          ],
+        ),
       ),
     );
   }

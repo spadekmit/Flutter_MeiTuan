@@ -19,7 +19,7 @@ class _FindPageState extends State<FindPage> {
           crossAxisCount: 2,
           itemCount: 12,
           itemBuilder: (BuildContext context, int index) =>
-              VideoCard(imageHeight: 80.0 + rng.nextInt(120)),
+              VideoCard(imageHeight: 80.0 + rng.nextInt(120), count: rng.nextInt(1000),),
           staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
           mainAxisSpacing: 4.0,
           crossAxisSpacing: 4.0,
@@ -30,7 +30,7 @@ class _FindPageState extends State<FindPage> {
         return StaggeredGridView.countBuilder(
           crossAxisCount: 2,
           itemCount: 12,
-          itemBuilder: (BuildContext context, int index) => VideoCard(),
+          itemBuilder: (BuildContext context, int index) => VideoCard(count: rng.nextInt(1000),),
           staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
           mainAxisSpacing: 4.0,
           crossAxisSpacing: 4.0,
@@ -104,9 +104,10 @@ class _FindPageState extends State<FindPage> {
 }
 
 class VideoCard extends StatelessWidget {
-  VideoCard({this.imageHeight});
+  VideoCard({this.imageHeight, this.count});
 
   final double imageHeight;
+  final count;
 
   @override
   Widget build(BuildContext context) {
@@ -153,9 +154,9 @@ class VideoCard extends StatelessWidget {
                   fit: FlexFit.loose,
                   child: Container(),
                 ),
-                Icon(Icons.insert_emoticon, size: 15.0,),
+                Icon(Icons.thumb_up, size: 15.0,),
                 SizedBox(width: 5.0,),
-                Text("666"),
+                Text(count.toString()),
                 SizedBox(width: 10.0,),
               ],
             ),

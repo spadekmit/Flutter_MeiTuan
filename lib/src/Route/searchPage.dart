@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_meituan/src/Route/testPage.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -34,31 +34,34 @@ class _SearchPageState extends State<SearchPage> {
   Widget _buildSearchRow(String data) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Row(
-        children: <Widget>[
-          Icon(
-            Icons.search,
-            color: Colors.grey,
-            size: 20,
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          Text(data),
-          Expanded(
-            child: Container(),
-          ),
-          Text(
-            "约" + random.nextInt(100).toString() + "个结果",
-            style: TextStyle(color: Colors.grey, fontSize: 12),
-          )
-        ],
+      child: InkWell(
+        onTap: () => Navigator.of(context).push(
+            CupertinoPageRoute(builder: (context) => TestPage(content: data))),
+        child: Row(
+          children: <Widget>[
+            Icon(
+              Icons.search,
+              color: Colors.grey,
+              size: 20,
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Text(data),
+            Expanded(
+              child: Container(),
+            ),
+            Text(
+              "约" + random.nextInt(100).toString() + "个结果",
+              style: TextStyle(color: Colors.grey, fontSize: 12),
+            )
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildDefaultBody() {
-    
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Column(
@@ -232,14 +235,20 @@ class TextTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(5),
-      child: Container(
-        margin: EdgeInsets.all(5),
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        color: Colors.grey[100],
-        child: Text(
-          tag,
+    return InkWell(
+      onTap: () => Navigator.of(context).push(CupertinoPageRoute(
+          builder: (context) => TestPage(
+                content: tag,
+              ))),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(5),
+        child: Container(
+          margin: EdgeInsets.all(5),
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          color: Colors.grey[100],
+          child: Text(
+            tag,
+          ),
         ),
       ),
     );
