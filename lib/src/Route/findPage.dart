@@ -10,7 +10,6 @@ class FindPage extends StatefulWidget {
 }
 
 class _FindPageState extends State<FindPage> {
-
   Widget _buildBody(int index) {
     var rng = Random();
     switch (index) {
@@ -18,8 +17,10 @@ class _FindPageState extends State<FindPage> {
         return StaggeredGridView.countBuilder(
           crossAxisCount: 2,
           itemCount: 12,
-          itemBuilder: (BuildContext context, int index) =>
-              VideoCard(imageHeight: 80.0 + rng.nextInt(120), count: rng.nextInt(1000),),
+          itemBuilder: (BuildContext context, int index) => VideoCard(
+                imageHeight: 80.0 + rng.nextInt(120),
+                count: rng.nextInt(1000),
+              ),
           staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
           mainAxisSpacing: 4.0,
           crossAxisSpacing: 4.0,
@@ -30,7 +31,9 @@ class _FindPageState extends State<FindPage> {
         return StaggeredGridView.countBuilder(
           crossAxisCount: 2,
           itemCount: 12,
-          itemBuilder: (BuildContext context, int index) => VideoCard(count: rng.nextInt(1000),),
+          itemBuilder: (BuildContext context, int index) => VideoCard(
+                count: rng.nextInt(1000),
+              ),
           staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
           mainAxisSpacing: 4.0,
           crossAxisSpacing: 4.0,
@@ -103,11 +106,18 @@ class _FindPageState extends State<FindPage> {
   }
 }
 
-class VideoCard extends StatelessWidget {
+class VideoCard extends StatefulWidget {
   VideoCard({this.imageHeight, this.count});
 
   final double imageHeight;
   final count;
+
+  @override
+  _VideoCardState createState() => _VideoCardState();
+}
+
+class _VideoCardState extends State<VideoCard> {
+  var _isSelected = false;
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +135,7 @@ class VideoCard extends StatelessWidget {
                 topLeft: Radius.circular(5.0), topRight: Radius.circular(5.0)),
             child: Container(
               width: double.infinity,
-              height: imageHeight,
+              height: widget.imageHeight,
               child: Image.network(
                 "https://p0.meituan.net/moviemachine/f7d2ad70eb79d6d9b8a197713db9b8c41711752.jpg@214w_297h_1e_1c",
                 fit: BoxFit.fitWidth,
@@ -154,10 +164,27 @@ class VideoCard extends StatelessWidget {
                   fit: FlexFit.loose,
                   child: Container(),
                 ),
-                Icon(Icons.thumb_up, size: 15.0,),
-                SizedBox(width: 5.0,),
-                Text(count.toString()),
-                SizedBox(width: 10.0,),
+                SizedBox(
+                  height: 25,
+                  width: 25,
+                  child: IconButton(
+                    tooltip: "点个赞哦",
+                    color: _isSelected ? Colors.red : Colors.black,
+                    padding: const EdgeInsets.all(0),
+                    iconSize: 15,
+                    icon: Icon(Icons.thumb_up),
+                    onPressed: () => setState(() {
+                          _isSelected = !_isSelected;
+                        }),
+                  ),
+                ),
+                SizedBox(
+                  width: 5.0,
+                ),
+                Text((_isSelected ? widget.count + 1 : widget.count).toString()),
+                SizedBox(
+                  width: 10.0,
+                ),
               ],
             ),
           ),
