@@ -20,16 +20,16 @@ class _SlidesShowWidgetState extends State<SlidesShowWidget>
 
   @override
   void initState() {
-    _timer = Timer.periodic(Duration(seconds: 2), _handleTimeout);
     super.initState();
+    _timer = Timer.periodic(Duration(seconds: 2), _handleTimeout);
     _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
   void dispose() {
-    _tabController?.dispose();
-    _pageController?.dispose();
-    _timer?.cancel();
+    _tabController.dispose();
+    _pageController.dispose();
+    _timer.cancel();
     super.dispose();
   }
 
@@ -87,21 +87,21 @@ class _SlidesShowWidgetState extends State<SlidesShowWidget>
 
   void _handleTimeout(Timer timer) {
     _index++;
-    _pageController.animateToPage(_index % 3,
+    _pageController?.animateToPage(_index % 3,
         duration: Duration(microseconds: 16), curve: Curves.fastOutSlowIn);
-    _tabController.animateTo(_index % 3);
+    _tabController?.animateTo(_index % 3);
   }
 
   void _handlePageChanged(int value) {
     _index = value;
     if (value == 0) {
-      _tabController.animateTo(_tabController.length - 1);
-      _pageController.jumpToPage(5 - 2);
+      _tabController?.animateTo(_tabController.length - 1);
+      _pageController?.jumpToPage(5 - 2);
     } else if (value == 5 - 1) {
-      _tabController.animateTo(0);
-      _pageController.jumpToPage(1);
+      _tabController?.animateTo(0);
+      _pageController?.jumpToPage(1);
     } else {
-      _tabController.animateTo(value - 1);
+      _tabController?.animateTo(value - 1);
     }
   }
 }

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_meituan/src/Route/testPage.dart';
 import 'package:flutter_meituan/src/Style/myTheme.dart';
 
+typedef OnPressCallback = void Function(Widget selectedItem);
+
 Widget _buildImage(double width, double height, String url) {
   return ClipRRect(
     borderRadius: BorderRadius.circular(8.0),
@@ -21,7 +23,7 @@ class RecommendedCard extends StatelessWidget {
 
   final Widget child;
   final String title;
-  final Function onDelete;
+  final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +61,7 @@ class RecommendedCard extends StatelessWidget {
                           Icons.highlight_off,
                           size: 20.0,
                         ),
-                        onPressed: () => onDelete(),
+                        onPressed: onDelete,
                       ),
                     ),
                   ],
@@ -93,7 +95,7 @@ class ScenicCard extends StatelessWidget {
   final List<String> imageUrls;
   final String score;
   final String address;
-  final Function onDelete;
+  final OnPressCallback onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -169,7 +171,7 @@ class BigPictureCateCard extends StatelessWidget {
   final List<String> imageUrls;
   final String content;
   final String address;
-  final Function onDelete;
+  final OnPressCallback onDelete;
 
   @override
   Widget build(BuildContext context) {

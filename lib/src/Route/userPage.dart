@@ -9,6 +9,32 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
+  Widget _buildHeadBotton() {
+    var map = {
+      "收藏": Icons.star,
+      "评价": Icons.branding_watermark,
+      "红包/卡卷": Icons.local_mall,
+      "消息": Icons.textsms
+    };
+    var list = <Widget>[];
+    map.forEach((key, value) {
+      list.add(SizedBox(
+        width: 70,
+        child: MyImageButton(
+          image: Icon(
+            value,
+            size: 30.0,
+          ),
+          title: key,
+        ),
+      ));
+      list.add(SizedBox(width: 1,));
+    });
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: list,
+    );
+  }
 
   Widget _buildTile(String top, String mid, String bot, {String tip}) {
     return Container(
@@ -72,7 +98,7 @@ class _UserPageState extends State<UserPage> {
 
   @override
   Widget build(BuildContext context) {
-    var list1 = <Widget>[
+    final list1 = <Widget>[
       MyImageButton(
         image: Image.asset(
           "images/title/1.png",
@@ -104,7 +130,7 @@ class _UserPageState extends State<UserPage> {
       ),
     ];
 
-    var list2 = <Widget>[
+    final list2 = <Widget>[
       MyImageButton(
         image: Image.asset(
           "images/title/1.png",
@@ -135,7 +161,7 @@ class _UserPageState extends State<UserPage> {
       ),
     ];
 
-    var list3 = <Widget>[
+    final list3 = <Widget>[
       MyImageButton(
         image: Image.asset(
           "images/title/1.png",
@@ -157,14 +183,13 @@ class _UserPageState extends State<UserPage> {
       body: Column(
         children: <Widget>[
           SafeArea(
-            child: Container(
-              height: 140.0,
-              margin: const EdgeInsets.only(
-                  left: 24.0, right: 14.0, top: 24.0, bottom: 15.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Row(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(
+                left: 24.0, right: 14.0, top: 24.0, bottom: 15.0),
+                  child: Row(
                     children: <Widget>[
                       ClipOval(
                         child: Image.asset(
@@ -190,45 +215,12 @@ class _UserPageState extends State<UserPage> {
                       Icon(Icons.headset_mic)
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      MyImageButton(
-                        image: Icon(
-                          Icons.star,
-                          size: 30.0,
-                        ),
-                        title: "收藏",
-                        width: 60.0,
-                      ),
-                      MyImageButton(
-                        image: Icon(
-                          Icons.branding_watermark,
-                          size: 30.0,
-                        ),
-                        title: "评价",
-                        width: 60.0,
-                      ),
-                      MyImageButton(
-                        image: Icon(
-                          Icons.local_mall,
-                          size: 30.0,
-                        ),
-                        title: "红包/卡卷",
-                        width: 60.0,
-                      ),
-                      MyImageButton(
-                        image: Icon(
-                          Icons.textsms,
-                          size: 30.0,
-                        ),
-                        title: "消息",
-                        width: 60.0,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 14, bottom: 15),
+                  child: _buildHeadBotton(),
+                ),
+              ],
             ),
           ),
           Expanded(
@@ -240,12 +232,10 @@ class _UserPageState extends State<UserPage> {
                 color: Colors.white,
               ),
               child: Padding(
-                padding:
-                    const EdgeInsets.only(left: 20, right: 20, top: 14),
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 14),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Row(
                       children: <Widget>[
                         Text(
@@ -265,7 +255,6 @@ class _UserPageState extends State<UserPage> {
                         )
                       ],
                     ),
-                    
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 5.0, horizontal: 10),
@@ -282,7 +271,6 @@ class _UserPageState extends State<UserPage> {
                       color: Colors.black,
                       height: 1.0,
                     ),
-                    
                     Container(
                         padding: EdgeInsets.symmetric(vertical: 8.0),
                         child: SlidesShowWidget(
@@ -295,7 +283,6 @@ class _UserPageState extends State<UserPage> {
                     SizedBox(
                       height: 15.0,
                     ),
-                    
                     Text(
                       "推荐工具",
                       style: CardTitleTextStyle,
@@ -307,7 +294,9 @@ class _UserPageState extends State<UserPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         _buildRow(list1),
+                        SizedBox(height: 5,),
                         _buildRow(list2),
+                        SizedBox(height: 5,),
                         _buildRow(list3),
                       ],
                     ),

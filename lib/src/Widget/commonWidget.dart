@@ -4,24 +4,22 @@ import 'package:flutter_meituan/src/Route/testPage.dart';
 
 class MyImageButton extends StatelessWidget {
   MyImageButton(
-      {@required this.image, @required this.title, this.width, this.tip});
+      {@required this.image, @required this.title, this.tip});
 
   final Widget image;
   final String title;
-  final double width;
   final String tip;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(context).push(CupertinoPageRoute(builder: (context) => TestPage())),
+      onTap: () => Navigator.of(context).push(CupertinoPageRoute(builder: (context) => TestPage(content: title,))),
       splashColor: Colors.grey,
-      child: Container(
-        width: width,
-        child: Stack(
-          children: <Widget>[
-            Center(
-              child: Column(
+      child: Stack(
+        children: <Widget>[
+          Center(
+            child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   SizedBox(
                     height: 12,
@@ -36,19 +34,18 @@ class MyImageButton extends StatelessWidget {
                   )
                 ],
               ),
-            ),
-            Align(
-              alignment: Alignment.topRight,
-              child: tip != null
-                  ? MyTag(
-                      tag: tip,
-                      isEmphasize: true,
-                      radius: 15.0,
-                    )
-                  : null,
-            ),
-          ],
-        ),
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: tip != null
+                ? MyTag(
+                    tag: tip,
+                    isEmphasize: true,
+                    radius: 15.0,
+                  )
+                : null,
+          ),
+        ],
       ),
     );
   }

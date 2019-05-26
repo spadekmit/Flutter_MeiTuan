@@ -22,62 +22,75 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _list;
   ScrollController _controller;
   bool isRefreshing;
-  static Widget _selectedItem;
-
-  void _removeItem(int index) {
-    _list.removeAt(index);
-    _listKey.currentState.removeItem(
-        index + 6,
-        (context, animation) =>
-            _buildRemovedItem(_selectedItem, context, animation));
-  }
-
-  void _insertItem(int index, Widget item) {
-    _list.insert(index, item);
-    _listKey.currentState.insertItem(index + 6);
-  }
+  Widget _selectedItem;
 
   @override
   void initState() {
-    super.initState();
+    super.initState(); //调用父类的initState方法
     isRefreshing = false;
     _controller = ScrollController();
     _controller.addListener(() {
+      //给ScrollController添加监听器
       if (_controller.position.pixels == _controller.position.maxScrollExtent &&
           !this.isRefreshing) {
+        //当滚动到底部且不在加载中时
         setState(() {
-          isRefreshing = true;
+          isRefreshing = true; //设置当前状态为正在加载中
           Widget item = Container(
+            //一个IOS风格的加载中的指示器
             height: 50,
             child: Center(child: CupertinoActivityIndicator()),
           );
-          _selectedItem = item;
-          _insertItem(_list.length, item);
+          _selectedItem = item; //设置当前选中的控件为该指示器，方便加载完后删除指示器
+          _insertItem(_list.length, item); //添加该指示器到底部
         });
 
         Future.delayed(Duration(seconds: 2), () {
+          //两秒后执行传入的方法
+          _removeItem(_list.length - 1); //删除指示器并添加三个推荐卡片
+          _insertItem(_list.length, _buildCard1());
+          _insertItem(_list.length, _buildCard2());
+          _insertItem(_list.length, _buildCard3());
           setState(() {
-            _removeItem(_list.length - 1);
-          });
-          setState(() {
-            _insertItem(_list.length, _buildCard1());
-            _insertItem(_list.length, _buildCard2());
-            _insertItem(_list.length, _buildCard3());
-            isRefreshing = false;
+            isRefreshing = false; //设置当前状态为不在加载中
           });
         });
       }
     });
     _list = <Widget>[
+      //第一次加载HomePage时初始化三个推荐卡片
       _buildCard1(),
       _buildCard2(),
       _buildCard3(),
     ];
   }
 
+  void _removeItem(int index) {
+    _list.removeAt(index); //从控件列表中移除对应索引位置的控件
+    _listKey.currentState.removeItem(
+        //从key中移除对应索引位置的控件并通过_buildRemovedItem方法显示一个移除的动画
+        index + 6,
+        (context, animation) =>
+            _buildRemovedItem(_selectedItem, context, animation));
+  }
+
+  void _insertItem(int index, Widget item) {
+    _list.insert(index, item); //从控件列表和key中添加一个控件
+    _listKey.currentState.insertItem(index + 6);
+  }
+
+  //构建被移除的控件（显示移除动画）
+  Widget _buildRemovedItem(
+      Widget widget, BuildContext context, Animation<double> animation) {
+    return SizeTransition(    //封装有尺寸变化动画的控件
+      axis: Axis.vertical,
+      sizeFactor: animation,
+      child: widget,
+    );
+  }
+
   ///主界面AppBar
   AppBar _buildHomeAppBar() {
-    
     return AppBar(
       automaticallyImplyLeading: false,
       elevation: 0.0,
@@ -300,29 +313,23 @@ class _HomePageState extends State<HomePage> {
 
   //构建一行功能按钮
   List<Widget> _buildTitle(
-      List<String> strs, List<String> urls, double width, double screenWidth) {
+      List<String> strs, List<String> urls, List<String> tips, double width) {
     List<Widget> titleList = <Widget>[];
     for (int i = 0; i < strs.length; i++) {
-      titleList.add(MyImageButton(
+      titleList.add(Flexible(
+        flex: 1,
+        child: MyImageButton(
           image: Image.asset(
             urls[i],
             width: width,
             height: width,
           ),
           title: strs[i],
-          width: (screenWidth - 30) / 5.0));
+          tip: tips[i],
+        ),
+      ));
     }
     return titleList;
-  }
-
-  //构建被移除的控件（显示移除动画）
-  Widget _buildRemovedItem(
-      Widget widget, BuildContext context, Animation<double> animation) {
-    return SizeTransition(
-      axis: Axis.vertical,
-      sizeFactor: animation,
-      child: widget,
-    );
   }
 
   //构建需要显示的控件
@@ -337,18 +344,17 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final bodys = _initBody();
-
+    final bodys = _initBody();    //顶部三行标题栏及轮播图等不会被删除的控件，因含有用于分隔的SizedBox控件，所以总长度为6
     return Scaffold(
       appBar: _buildHomeAppBar(),
       body: Container(
-        decoration: GradientDecoration,
+        decoration: GradientDecoration,   //定义在主题文件中的渐变色装饰器
         child: AnimatedList(
-          controller: _controller,
+          controller: _controller,    //绑定滚动控制器，key等
           key: _listKey,
-          initialItemCount: bodys.length + _list.length,
-          itemBuilder: (context, index, animation) {
-            if (index > 5) {
+          initialItemCount: bodys.length + _list.length,  //初始化时的控件总长度
+          itemBuilder: (context, index, animation) {     //当子控件要可见时调用该方法构建控件
+            if (index > 5) {     //索引大于5时显示_list列表中的推荐卡片，否则bodys中的控件。
               return _buildItem(context, index - bodys.length, animation);
             } else {
               return bodys[index];
@@ -485,6 +491,12 @@ class _HomePageState extends State<HomePage> {
       "images/title/15.png",
     ];
 
+    const tip1 = <String>[null, null, "嗨抢", "网咖", null];
+
+    const tip2 = <String>[null, null, "早订", null, null];
+
+    const tip3 = <String>[null, null, null, null, null];
+
     return <Widget>[
       //第一行标题栏
       Container(
@@ -492,52 +504,7 @@ class _HomePageState extends State<HomePage> {
             left: 15.0, right: 15.0, bottom: 5.0, top: 10.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            MyImageButton(
-                image: Image.asset(
-                  url1[0],
-                  repeat: ImageRepeat.repeat,
-                  width: screenWidth / 7,
-                  height: screenWidth / 7,
-                ),
-                title: title1[0],
-                width: (screenWidth - 30) / 5.0),
-            MyImageButton(
-                image: Image.asset(
-                  url1[1],
-                  width: screenWidth / 7,
-                  height: screenWidth / 7,
-                ),
-                title: title1[1],
-                width: (screenWidth - 30) / 5.0),
-            MyImageButton(
-              image: Image.asset(
-                url1[2],
-                width: screenWidth / 7,
-                height: screenWidth / 7,
-              ),
-              title: title1[2],
-              width: (screenWidth - 30) / 5.0,
-              tip: "嗨抢",
-            ),
-            MyImageButton(
-                image: Image.asset(
-                  url1[3],
-                  width: screenWidth / 7,
-                  height: screenWidth / 7,
-                ),
-                title: title1[3],
-                tip: "网咖",
-                width: (screenWidth - 30) / 5.0),
-            MyImageButton(
-                image: Image.asset(
-                  url1[4],
-                  width: screenWidth / 7,
-                  height: screenWidth / 7,
-                ),
-                title: title1[4],
-                width: (screenWidth - 30) / 5.0),
-          ],
+          children: _buildTitle(title1, url1, tip1, screenWidth / 7),
         ),
       ),
       SizedBox(
@@ -548,7 +515,7 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: _buildTitle(title2, url2, screenWidth / 14.0, screenWidth),
+          children: _buildTitle(title2, url2, tip2, screenWidth / 14.0),
         ),
       ),
       SizedBox(
@@ -559,7 +526,7 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: _buildTitle(title3, url3, screenWidth / 14.0, screenWidth),
+          children: _buildTitle(title3, url3, tip3, screenWidth / 14.0),
         ),
       ),
       Container(
