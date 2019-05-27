@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_meituan/src/Route/testPage.dart';
-import 'package:flutter_meituan/src/Style/myTheme.dart';
+import 'package:flutter_meituan/src/route/testPage.dart';
+import 'package:flutter_meituan/src/style/myTheme.dart';
 
 typedef OnPressCallback = void Function(Widget selectedItem);
 

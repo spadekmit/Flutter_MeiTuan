@@ -2,7 +2,8 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_meituan/src/Route/testPage.dart';
+import 'package:flutter_meituan/src/route/searchResultPage.dart';
+import 'package:flutter_meituan/src/route/testPage.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -36,7 +37,7 @@ class _SearchPageState extends State<SearchPage> {
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
         onTap: () => Navigator.of(context).push(
-            CupertinoPageRoute(builder: (context) => TestPage(content: data))),
+            CupertinoPageRoute(builder: (context) => SearchResultPage(searchStr: data))),
         child: Row(
           children: <Widget>[
             Icon(
@@ -237,8 +238,8 @@ class TextTag extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Navigator.of(context).push(CupertinoPageRoute(
-          builder: (context) => TestPage(
-                content: tag,
+          builder: (context) => SearchResultPage(
+                searchStr: tag,
               ))),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(5),

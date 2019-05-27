@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_meituan/src/Route/searchPage.dart';
-import 'package:flutter_meituan/src/Route/testPage.dart';
-import 'package:flutter_meituan/src/Style/myTheme.dart';
-import 'package:flutter_meituan/src/Widget/commonWidget.dart';
-import 'package:flutter_meituan/src/Widget/recommendedCard.dart';
-import 'package:flutter_meituan/src/Widget/slidesShow.dart';
+import 'package:flutter_meituan/src/route/searchPage.dart';
+import 'package:flutter_meituan/src/route/testPage.dart';
+import 'package:flutter_meituan/src/style/myTheme.dart';
+import 'package:flutter_meituan/src/widget/commonWidget.dart';
+import 'package:flutter_meituan/src/widget/recommendedCard.dart';
+import 'package:flutter_meituan/src/widget/slidesShow.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({@required this.screenWidth});

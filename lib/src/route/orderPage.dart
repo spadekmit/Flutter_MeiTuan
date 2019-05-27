@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_meituan/src/Style/myTheme.dart';
-import 'package:flutter_meituan/src/Widget/orderCard.dart';
+import 'package:flutter_meituan/src/style/myTheme.dart';
+import 'package:flutter_meituan/src/widget/orderCard.dart';
 
 class OrderPage extends StatefulWidget {
   @override

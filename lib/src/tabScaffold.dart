@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_meituan/src/Route/findPage.dart';
-import 'package:flutter_meituan/src/Route/homePage.dart';
-import 'package:flutter_meituan/src/Route/orderPage.dart';
-import 'package:flutter_meituan/src/Route/userPage.dart';
+import 'package:flutter_meituan/src/route/findPage.dart';
+import 'package:flutter_meituan/src/route/homePage.dart';
+import 'package:flutter_meituan/src/route/orderPage.dart';
+import 'package:flutter_meituan/src/route/userPage.dart';
 
 class TabScaffold extends StatefulWidget {
   @override

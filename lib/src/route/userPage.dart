@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_meituan/src/Style/myTheme.dart';
-import 'package:flutter_meituan/src/Widget/commonWidget.dart';
-import 'package:flutter_meituan/src/Widget/slidesShow.dart';
+import 'package:flutter_meituan/src/style/myTheme.dart';
+import 'package:flutter_meituan/src/widget/commonWidget.dart';
+import 'package:flutter_meituan/src/widget/slidesShow.dart';
 
 class UserPage extends StatefulWidget {
   @override
