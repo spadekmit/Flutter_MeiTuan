@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -86,46 +85,55 @@ class _SearchResultPageState extends State<SearchResultPage> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 30),
             child: StreamBuilder<int>(
-              stream: _controller.stream,
-              initialData: 0,
-              builder: (context, snapshot) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    SortButton(
-                      label: "全部分类",
-                      onPress: () {
-                        int index;
-                        index = snapshot.data == oldIndex ? 0 : 1;
-                        _controller.sink.add(index);
-                        oldIndex = index;
-                      },
-                      isActivity: snapshot.data == 1,
-                    ),
-                    SortButton(
-                      label: "全城",
-                      onPress: () {
-                        int index;
-                        index = snapshot.data == oldIndex ? 0 : 2;
-                        _controller.sink.add(index);
-                        oldIndex = index;
-                      },
-                      isActivity: snapshot.data == 2,
-                    ),
-                    SortButton(
-                      label: "智能排序",
-                      onPress: () {
-                        int index;
-                        index = snapshot.data == oldIndex ? 0 : 3;
-                        _controller.sink.add(index);
-                        oldIndex = index;
-                      },
-                      isActivity: snapshot.data == 3,
-                    ),
-                  ],
-                );
-              }
-            ),
+                stream: _controller.stream,
+                initialData: 0,
+                builder: (context, snapshot) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      SortButton(
+                        label: "全部分类",
+                        onPress: () {
+                          
+                          int index;
+                          if (oldIndex != 1)
+                            index = 1;
+                          else
+                            index = 0;
+                          _controller.sink.add(index);
+                          oldIndex = index;
+                        },
+                        isActivity: snapshot.data == 1,
+                      ),
+                      SortButton(
+                        label: "全城",
+                        onPress: () {
+                          int index;
+                          if (oldIndex != 2)
+                            index = 2;
+                          else
+                            index = 0;
+                          _controller.sink.add(index);
+                          oldIndex = index;
+                        },
+                        isActivity: snapshot.data == 2,
+                      ),
+                      SortButton(
+                        label: "智能排序",
+                        onPress: () {
+                          int index;
+                          if (oldIndex != 3)
+                            index = 3;
+                          else
+                            index = 0;
+                          _controller.sink.add(index);
+                          oldIndex = index;
+                        },
+                        isActivity: snapshot.data == 3,
+                      ),
+                    ],
+                  );
+                }),
           ),
           Divider(
             color: Colors.grey,
@@ -202,8 +210,14 @@ class _SearchResultPageState extends State<SearchResultPage> {
                               ),
                               Expanded(
                                 child: Opacity(
-                                  child: Container(
-                                    color: Colors.black,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      _controller.sink.add(0);
+                                      oldIndex = 0;
+                                    },
+                                    child: Container(
+                                      color: Colors.black,
+                                    ),
                                   ),
                                   opacity: 0.6,
                                 ),
@@ -222,7 +236,6 @@ class _SearchResultPageState extends State<SearchResultPage> {
 }
 
 class SortButton extends StatelessWidget {
-
   SortButton({@required this.label, this.isActivity = false, this.onPress});
 
   final String label;
