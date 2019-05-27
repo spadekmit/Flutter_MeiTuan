@@ -10,7 +10,7 @@ import 'package:flutter_meituan/src/Widget/slidesShow.dart';
 class HomePage extends StatefulWidget {
   HomePage({@required this.screenWidth});
 
-  final double screenWidth;
+  final double screenWidth; //在build前获取到屏幕宽度
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -34,16 +34,14 @@ class _HomePageState extends State<HomePage> {
       if (_controller.position.pixels == _controller.position.maxScrollExtent &&
           !this.isRefreshing) {
         //当滚动到底部且不在加载中时
-        setState(() {
-          isRefreshing = true; //设置当前状态为正在加载中
-          Widget item = Container(
-            //一个IOS风格的加载中的指示器
-            height: 50,
-            child: Center(child: CupertinoActivityIndicator()),
-          );
-          _selectedItem = item; //设置当前选中的控件为该指示器，方便加载完后删除指示器
-          _insertItem(_list.length, item); //添加该指示器到底部
-        });
+        isRefreshing = true; //设置当前状态为正在加载中
+        Widget item = Container(
+          //一个IOS风格的加载中的指示器
+          height: 50,
+          child: Center(child: CupertinoActivityIndicator()),
+        );
+        _selectedItem = item; //设置当前选中的控件为该指示器，方便加载完后删除指示器
+        _insertItem(_list.length, item); //添加该指示器到底部
 
         Future.delayed(Duration(seconds: 2), () {
           //两秒后执行传入的方法
@@ -51,9 +49,7 @@ class _HomePageState extends State<HomePage> {
           _insertItem(_list.length, _buildCard1());
           _insertItem(_list.length, _buildCard2());
           _insertItem(_list.length, _buildCard3());
-          setState(() {
-            isRefreshing = false; //设置当前状态为不在加载中
-          });
+          isRefreshing = false; //设置当前状态为不在加载中
         });
       }
     });
@@ -82,7 +78,8 @@ class _HomePageState extends State<HomePage> {
   //构建被移除的控件（显示移除动画）
   Widget _buildRemovedItem(
       Widget widget, BuildContext context, Animation<double> animation) {
-    return SizeTransition(    //封装有尺寸变化动画的控件
+    return SizeTransition(
+      //封装有尺寸变化动画的控件
       axis: Axis.vertical,
       sizeFactor: animation,
       child: widget,
@@ -91,30 +88,36 @@ class _HomePageState extends State<HomePage> {
 
   ///主界面AppBar
   AppBar _buildHomeAppBar() {
+    //构建一个美团首页AppBar
     return AppBar(
-      automaticallyImplyLeading: false,
-      elevation: 0.0,
-      backgroundColor: Colors.white,
+      automaticallyImplyLeading: false, //不自动显示一个返回按钮
+      elevation: 0.0, //关闭阴影高度
+      backgroundColor: Colors.white, //背景颜色设为白色
       flexibleSpace: SafeArea(
-        //适配刘海
+        //适配刘海，自动避开刘海，IOS底部导航的非显示区域
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             InkWell(
-              borderRadius: BorderRadius.circular(45),
-              onTap: () => Navigator.of(context)
+              //水波纹特效
+              borderRadius: BorderRadius.circular(45), //水波纹特效边角弧度
+              onTap: () => Navigator.of(context) //以IOS风格动画导航到TestPage
                   .push(CupertinoPageRoute(builder: (context) => TestPage())),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0), //增加水平方向外边距8
                 child: ClipOval(
+                  //以圆形截取子控件
                   child: Image.asset("images/protrait.png",
                       width: 35.0, height: 35.0),
                 ),
               ),
             ),
             InkWell(
-              onTap: () => Navigator.of(context)
-                  .push(CupertinoPageRoute(builder: (context) => TestPage())),
+              onTap: () => Navigator.of(context).push(CupertinoPageRoute(
+                  builder: (context) => TestPage(
+                        content: "地址选择",
+                      ))),
               child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,8 +146,10 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Expanded(
+              //占满剩余控件
               child: GestureDetector(
                 onTap: () {
+                  //以IOS风格动画导航到搜索界面
                   Navigator.of(context).push(
                       CupertinoPageRoute(builder: (context) => SearchPage()));
                 },
@@ -177,13 +182,16 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: PopupMenuButton(
+                //弹出菜单按钮
                 child: Icon(
+                  //按钮图标
                   Icons.add,
                   size: 30,
                   color: Colors.black,
                 ),
                 itemBuilder: (context) => <PopupMenuEntry>[
                       PopupMenuItem(
+                        //扫一扫菜单项
                         child: Container(
                             child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -197,6 +205,7 @@ class _HomePageState extends State<HomePage> {
                         )),
                       ),
                       PopupMenuItem(
+                        //付款码菜单项
                         child: Container(
                             child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -249,7 +258,7 @@ class _HomePageState extends State<HomePage> {
   //显示推荐卡片的关闭对话框
   void _showDeleteDialog(Widget selectedItem) {
     _selectedItem = selectedItem;
-    var dialog = SimpleDialog(
+    var dialog = SimpleDialog(    //简单对话框
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       titlePadding: EdgeInsets.only(top: 20),
       title: Column(
@@ -305,7 +314,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
 
-    showDialog(
+    showDialog(   //在屏幕中心显示一个对话框
       context: context,
       builder: (context) => dialog,
     );
@@ -344,17 +353,19 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final bodys = _initBody();    //顶部三行标题栏及轮播图等不会被删除的控件，因含有用于分隔的SizedBox控件，所以总长度为6
+    final bodys = _initBody(); //顶部三行标题栏及轮播图等不会被删除的控件，因含有用于分隔的SizedBox控件，所以总长度为6
     return Scaffold(
       appBar: _buildHomeAppBar(),
       body: Container(
-        decoration: GradientDecoration,   //定义在主题文件中的渐变色装饰器
+        decoration: GradientDecoration, //定义在主题文件中的渐变色装饰器
         child: AnimatedList(
-          controller: _controller,    //绑定滚动控制器，key等
+          controller: _controller, //绑定滚动控制器，key等
           key: _listKey,
-          initialItemCount: bodys.length + _list.length,  //初始化时的控件总长度
-          itemBuilder: (context, index, animation) {     //当子控件要可见时调用该方法构建控件
-            if (index > 5) {     //索引大于5时显示_list列表中的推荐卡片，否则bodys中的控件。
+          initialItemCount: bodys.length + _list.length, //初始化时的控件总长度
+          itemBuilder: (context, index, animation) {
+            //当子控件要可见时调用该方法构建控件
+            if (index > 5) {
+              //索引大于5时显示_list列表中的推荐卡片，否则bodys中的控件。
               return _buildItem(context, index - bodys.length, animation);
             } else {
               return bodys[index];
