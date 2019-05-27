@@ -17,8 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final GlobalKey<AnimatedListState> _listKey =
-      new GlobalKey<AnimatedListState>();
+  GlobalKey<AnimatedListState> _listKey;
   List<Widget> _list;
   ScrollController _controller;
   bool isRefreshing;
@@ -27,6 +26,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState(); //调用父类的initState方法
+    _listKey = GlobalKey<AnimatedListState>();
     isRefreshing = false;
     _controller = ScrollController();
     _controller.addListener(() {
@@ -258,7 +258,8 @@ class _HomePageState extends State<HomePage> {
   //显示推荐卡片的关闭对话框
   void _showDeleteDialog(Widget selectedItem) {
     _selectedItem = selectedItem;
-    var dialog = SimpleDialog(    //简单对话框
+    var dialog = SimpleDialog(
+      //简单对话框
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       titlePadding: EdgeInsets.only(top: 20),
       title: Column(
@@ -314,7 +315,8 @@ class _HomePageState extends State<HomePage> {
       ),
     );
 
-    showDialog(   //在屏幕中心显示一个对话框
+    showDialog(
+      //在屏幕中心显示一个对话框
       context: context,
       builder: (context) => dialog,
     );
@@ -351,6 +353,16 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Future<void> _refresh() async {
+    setState(() {
+      _list.clear();
+      _list.add(_buildCard1());
+      _list.add(_buildCard2());
+      _list.add(_buildCard3());
+    });
+    _listKey = GlobalKey<AnimatedListState>();
+  }
+
   @override
   Widget build(BuildContext context) {
     final bodys = _initBody(); //顶部三行标题栏及轮播图等不会被删除的控件，因含有用于分隔的SizedBox控件，所以总长度为6
@@ -358,19 +370,22 @@ class _HomePageState extends State<HomePage> {
       appBar: _buildHomeAppBar(),
       body: Container(
         decoration: GradientDecoration, //定义在主题文件中的渐变色装饰器
-        child: AnimatedList(
-          controller: _controller, //绑定滚动控制器，key等
-          key: _listKey,
-          initialItemCount: bodys.length + _list.length, //初始化时的控件总长度
-          itemBuilder: (context, index, animation) {
-            //当子控件要可见时调用该方法构建控件
-            if (index > 5) {
-              //索引大于5时显示_list列表中的推荐卡片，否则bodys中的控件。
-              return _buildItem(context, index - bodys.length, animation);
-            } else {
-              return bodys[index];
-            }
-          },
+        child: RefreshIndicator(
+          onRefresh: () => Future.delayed(Duration(seconds: 2), _refresh),
+          child: AnimatedList(
+            controller: _controller, //绑定滚动控制器，key等
+            key: _listKey,
+            initialItemCount: bodys.length + _list.length, //初始化时的控件总长度
+            itemBuilder: (context, index, animation) {
+              //当子控件要可见时调用该方法构建控件
+              if (index > 5) {
+                //索引大于5时显示_list列表中的推荐卡片，否则bodys中的控件。
+                return _buildItem(context, index - bodys.length, animation);
+              } else {
+                return bodys[index];
+              }
+            },
+          ),
         ),
       ),
     );
