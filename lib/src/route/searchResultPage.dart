@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_meituan/src/route/searchPage.dart';
+import 'package:flutter_meituan/src/widget/commonWidget.dart';
+import 'package:provide/provide.dart';
 
 class SearchResultPage extends StatefulWidget {
   SearchResultPage({@required this.searchStr});
@@ -13,21 +16,6 @@ class SearchResultPage extends StatefulWidget {
 }
 
 class _SearchResultPageState extends State<SearchResultPage> {
-  StreamController<int> _controller;
-  int oldIndex = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = StreamController<int>.broadcast();
-  }
-
-  @override
-  void dispose() {
-    _controller.close();
-    super.dispose();
-  }
-
   Widget _buildSelected3() {
     return Container(
       color: Colors.white,
@@ -56,10 +44,11 @@ class _SearchResultPageState extends State<SearchResultPage> {
     );
   }
 
+  Widget _buildSelected2() {}
+
   Widget _buildSelectedCard(int index) {
     switch (index) {
       case 1:
-      case 2:
         return Container(
           color: Colors.white,
           height: 300,
@@ -67,7 +56,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
             child: Text("test"),
           ),
         );
-      case 3:
+      case 2:
         return _buildSelected3();
       default:
         return Container();
@@ -76,201 +65,200 @@ class _SearchResultPageState extends State<SearchResultPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        flexibleSpace: SafeArea(
-          child: Row(
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.arrow_back_ios),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => SearchPage())),
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(45.0))),
-                    color: CupertinoColors.lightBackgroundGray,
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Row(
-                        children: <Widget>[
-                          Icon(
-                            Icons.search,
-                            color: Colors.grey,
-                            size: 22,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            widget.searchStr,
-                            style: TextStyle(
-                                fontSize: 16, color: Colors.grey, height: 0.8),
-                          )
-                        ],
+    final providers = Providers()
+      ..provide(Provider.function((context) => SortData(0)));
+    return ProviderNode(
+      providers: providers,
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          flexibleSpace: SafeArea(
+            child: Row(
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.arrow_back_ios),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      Provide.value<SortData>(context).setLevel1(0);
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => SearchPage()));
+                    },
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(45.0))),
+                      color: CupertinoColors.lightBackgroundGray,
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.search,
+                              color: Colors.grey,
+                              size: 22,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              widget.searchStr,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.grey,
+                                  height: 0.8),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                width: 15,
-              )
-            ],
-          ),
-        ),
-      ),
-      body: Container(
-          child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 30),
-            child: StreamBuilder<int>(
-                stream: _controller.stream,
-                initialData: 0,
-                builder: (context, snapshot) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      SortButton(
-                        label: "全部分类",
-                        onPress: () {
-                          int index;
-                          if (oldIndex != 1)
-                            index = 1;
-                          else
-                            index = 0;
-                          _controller.sink.add(index);
-                          oldIndex = index;
-                        },
-                        isActivity: snapshot.data == 1,
-                      ),
-                      SortButton(
-                        label: "全城",
-                        onPress: () {
-                          int index;
-                          if (oldIndex != 2)
-                            index = 2;
-                          else
-                            index = 0;
-                          _controller.sink.add(index);
-                          oldIndex = index;
-                        },
-                        isActivity: snapshot.data == 2,
-                      ),
-                      SortButton(
-                        label: "智能排序",
-                        onPress: () {
-                          int index;
-                          if (oldIndex != 3)
-                            index = 3;
-                          else
-                            index = 0;
-                          _controller.sink.add(index);
-                          oldIndex = index;
-                        },
-                        isActivity: snapshot.data == 3,
-                      ),
-                    ],
-                  );
-                }),
-          ),
-          Divider(
-            color: Colors.grey,
-            height: 0.1,
-          ),
-          Expanded(
-            child: Stack(
-              children: <Widget>[
-                ListView(
-                  children: <Widget>[
-                    ListTile(
-                      title: Text("sadf"),
-                    ),
-                    ListTile(
-                      title: Text("sadf"),
-                    ),
-                    ListTile(
-                      title: Text("sadf"),
-                    ),
-                    ListTile(
-                      title: Text("sadf"),
-                    ),
-                    ListTile(
-                      title: Text("sadf"),
-                    ),
-                    ListTile(
-                      title: Text("sadf"),
-                    ),
-                    ListTile(
-                      title: Text("sadf"),
-                    ),
-                    ListTile(
-                      title: Text("sadf"),
-                    ),
-                    ListTile(
-                      title: Text("sadf"),
-                    ),
-                    ListTile(
-                      title: Text("sadf"),
-                    ),
-                    ListTile(
-                      title: Text("sadf"),
-                    ),
-                    ListTile(
-                      title: Text("sadf"),
-                    ),
-                    ListTile(
-                      title: Text("sadf"),
-                    ),
-                    ListTile(
-                      title: Text("sadf"),
-                    ),
-                  ],
-                ),
-                StreamBuilder<int>(
-                    stream: _controller.stream,
-                    initialData: 0,
-                    builder: (context, snapshot) {
-                      switch (snapshot.data) {
-                        case 0:
-                          return Container();
-                          break;
-                        case 1:
-                        case 2:
-                        case 3:
-                          return Column(
-                            children: <Widget>[
-                              _buildSelectedCard(snapshot.data),
-                              Expanded(
-                                child: Opacity(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      _controller.sink.add(0);
-                                      oldIndex = 0;
-                                    },
-                                    child: Container(
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  opacity: 0.6,
-                                ),
-                              )
-                            ],
-                          );
-                          break;
-                      }
-                    })
+                SizedBox(
+                  width: 15,
+                )
               ],
             ),
-          )
-        ],
-      )),
+          ),
+        ),
+        body: Container(
+            color: Colors.white,
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
+                  child: Provide<SortData>(builder: (context, _, sortData) {
+                    return Row(
+                      children: <Widget>[
+                        SortButton(
+                          label: "全城",
+                          onPress: () {
+                            sortData.setLevel1(0);
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return Container(
+                                    color: Colors.white,
+                                    child: Column(
+                                      children: <Widget>[
+                                        Row(
+                                          children: <Widget>[
+                                            IconButton(
+                                              icon: Icon(Icons.delete),
+                                              onPressed: () {},
+                                            ),
+                                            Expanded(
+                                              child: buildFakeSearchBox(
+                                                  Icons.location_on,
+                                                  "请输入街道，大厦或小区名称"),
+                                            ),
+                                            SizedBox(width: 60,)
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                });
+                          },
+                          isActivity: false,
+                        ),
+                        SortButton(
+                          label: "排序",
+                          onPress: () => sortData.setLevel1(2),
+                          isActivity: sortData.level1 == 2,
+                        ),
+                      ],
+                    );
+                  }),
+                ),
+                Divider(
+                  color: Colors.grey,
+                  height: 0.1,
+                ),
+                Expanded(
+                  child: Stack(
+                    children: <Widget>[
+                      ListView(
+                        children: <Widget>[
+                          ListTile(
+                            title: Text("sadf"),
+                          ),
+                          ListTile(
+                            title: Text("sadf"),
+                          ),
+                          ListTile(
+                            title: Text("sadf"),
+                          ),
+                          ListTile(
+                            title: Text("sadf"),
+                          ),
+                          ListTile(
+                            title: Text("sadf"),
+                          ),
+                          ListTile(
+                            title: Text("sadf"),
+                          ),
+                          ListTile(
+                            title: Text("sadf"),
+                          ),
+                          ListTile(
+                            title: Text("sadf"),
+                          ),
+                          ListTile(
+                            title: Text("sadf"),
+                          ),
+                          ListTile(
+                            title: Text("sadf"),
+                          ),
+                          ListTile(
+                            title: Text("sadf"),
+                          ),
+                          ListTile(
+                            title: Text("sadf"),
+                          ),
+                          ListTile(
+                            title: Text("sadf"),
+                          ),
+                          ListTile(
+                            title: Text("sadf"),
+                          ),
+                        ],
+                      ),
+                      Provide<SortData>(builder: (context, _, sortData) {
+                        switch (sortData.level1) {
+                          case 0:
+                            return Container();
+                            break;
+                          case 2:
+                            return Column(
+                              children: <Widget>[
+                                _buildSelectedCard(sortData.level1),
+                                Expanded(
+                                  child: Opacity(
+                                    child: GestureDetector(
+                                      onTap: () => sortData.setLevel1(0),
+                                      child: Container(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    opacity: 0.6,
+                                  ),
+                                )
+                              ],
+                            );
+                            break;
+                        }
+                      })
+                    ],
+                  ),
+                )
+              ],
+            )),
+      ),
     );
   }
 }
@@ -286,18 +274,48 @@ class SortButton extends StatelessWidget {
     return InkWell(
       highlightColor: Colors.green,
       onTap: onPress,
-      child: Row(
-        children: <Widget>[
-          Text(
-            label,
-            style: TextStyle(color: isActivity ? Colors.green : Colors.black),
+      child: Card(
+        elevation: 0,
+        color: Colors.grey[100],
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+          child: Row(
+            children: <Widget>[
+              Text(
+                label,
+                style: TextStyle(
+                    color: isActivity ? Colors.green : Colors.black,
+                    fontSize: 12),
+              ),
+              Icon(
+                isActivity
+                    ? Icons.keyboard_arrow_up
+                    : Icons.keyboard_arrow_down,
+                color: isActivity ? Colors.green : Colors.black,
+                size: 12,
+              ),
+            ],
           ),
-          Icon(
-            isActivity ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-            color: isActivity ? Colors.green : Colors.black,
-          ),
-        ],
+        ),
       ),
     );
+  }
+}
+
+class SortData with ChangeNotifier {
+  int _level1Item;
+
+  int get level1 => _level1Item;
+
+  SortData(this._level1Item);
+
+  void setLevel1(int newValue) {
+    if (newValue == _level1Item) {
+      _level1Item = 0;
+    } else {
+      _level1Item = newValue;
+    }
+    notifyListeners();
   }
 }

@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_meituan/src/route/testPage.dart';
 
 class MyImageButton extends StatelessWidget {
-  MyImageButton(
-      {@required this.image, @required this.title, this.tip});
+  MyImageButton({@required this.image, @required this.title, this.tip});
 
   final Widget image;
   final String title;
@@ -13,27 +12,30 @@ class MyImageButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(context).push(CupertinoPageRoute(builder: (context) => TestPage(content: title,))),
+      onTap: () => Navigator.of(context).push(CupertinoPageRoute(
+          builder: (context) => TestPage(
+                content: title,
+              ))),
       splashColor: Colors.grey,
       child: Stack(
         children: <Widget>[
           Center(
             child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  SizedBox(
-                    height: 12,
-                  ),
-                  image,
-                  SizedBox(
-                    height: 5.0,
-                  ),
-                  Text(
-                    title,
-                    style: TextStyle(fontSize: 12.0),
-                  )
-                ],
-              ),
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                SizedBox(
+                  height: 12,
+                ),
+                image,
+                SizedBox(
+                  height: 5.0,
+                ),
+                Text(
+                  title,
+                  style: TextStyle(fontSize: 12.0),
+                )
+              ],
+            ),
           ),
           Align(
             alignment: Alignment.topRight,
@@ -101,4 +103,31 @@ class MyTag extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget buildFakeSearchBox(IconData icon, String label) {
+  return Card(
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(45.0))),
+    color: CupertinoColors.lightBackgroundGray,
+    child: Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Row(
+        children: <Widget>[
+          Icon(
+            icon,
+            color: Colors.grey,
+            size: 22,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Text(
+            label,
+            style: TextStyle(fontSize: 16, color: Colors.grey, height: 0.8),
+          )
+        ],
+      ),
+    ),
+  );
 }
