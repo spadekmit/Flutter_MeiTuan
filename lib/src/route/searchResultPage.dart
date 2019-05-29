@@ -28,6 +28,52 @@ class _SearchResultPageState extends State<SearchResultPage> {
     super.dispose();
   }
 
+  Widget _buildSelected3() {
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            title: Text("智能排序"),
+          ),
+          ListTile(
+            title: Text("好评优先"),
+          ),
+          ListTile(
+            title: Text("离我最近"),
+          ),
+          ListTile(
+            title: Text("人均最低"),
+          ),
+          ListTile(
+            title: Text("人均最高"),
+          ),
+          SizedBox(
+            height: 100,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSelectedCard(int index) {
+    switch (index) {
+      case 1:
+      case 2:
+        return Container(
+          color: Colors.white,
+          height: 300,
+          child: Center(
+            child: Text("test"),
+          ),
+        );
+      case 3:
+        return _buildSelected3();
+      default:
+        return Container();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,7 +140,6 @@ class _SearchResultPageState extends State<SearchResultPage> {
                       SortButton(
                         label: "全部分类",
                         onPress: () {
-                          
                           int index;
                           if (oldIndex != 1)
                             index = 1;
@@ -201,13 +246,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
                         case 3:
                           return Column(
                             children: <Widget>[
-                              Container(
-                                color: Colors.white,
-                                height: 300,
-                                child: Center(
-                                  child: Text("test"),
-                                ),
-                              ),
+                              _buildSelectedCard(snapshot.data),
                               Expanded(
                                 child: Opacity(
                                   child: GestureDetector(
@@ -224,6 +263,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
                               )
                             ],
                           );
+                          break;
                       }
                     })
               ],
