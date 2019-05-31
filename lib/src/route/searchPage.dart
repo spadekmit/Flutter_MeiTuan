@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_meituan/src/route/searchResultPage.dart';
-import 'package:flutter_meituan/src/route/testPage.dart';
+import 'package:flutter_meituan/src/widget/commonWidget.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -32,12 +32,19 @@ class _SearchPageState extends State<SearchPage> {
     streamController.close();
   }
 
+  void _pushToSearchResultPage(String tag) {
+    Navigator.of(context).push(CupertinoPageRoute(
+        builder: (context) => SearchResultPage(
+              searchStr: tag,
+            )));
+  }
+
   Widget _buildSearchRow(String data) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
-        onTap: () => Navigator.of(context).push(
-            CupertinoPageRoute(builder: (context) => SearchResultPage(searchStr: data))),
+        onTap: () => Navigator.of(context).push(CupertinoPageRoute(
+            builder: (context) => SearchResultPage(searchStr: data))),
         child: Row(
           children: <Widget>[
             Icon(
@@ -79,21 +86,27 @@ class _SearchPageState extends State<SearchPage> {
             children: <Widget>[
               TextTag(
                 tag: "故宫博物院",
+                onTap: () => _pushToSearchResultPage("故宫博物院"),
               ),
               TextTag(
                 tag: "老北京涮肉",
+                onTap: () => _pushToSearchResultPage("老北京涮肉"),
               ),
               TextTag(
                 tag: "虾吃虾涮",
+                onTap: () => _pushToSearchResultPage("虾吃虾涮"),
               ),
               TextTag(
                 tag: "故宫珍宝馆",
+                onTap: () => _pushToSearchResultPage("故宫珍宝馆"),
               ),
               TextTag(
                 tag: "北京欢乐谷",
+                onTap: () => _pushToSearchResultPage("北京欢乐谷"),
               ),
               TextTag(
                 tag: "后海",
+                onTap: () => _pushToSearchResultPage("后海"),
               ),
             ],
           ),
@@ -120,24 +133,31 @@ class _SearchPageState extends State<SearchPage> {
             children: <Widget>[
               TextTag(
                 tag: "故宫博物院",
+                onTap: () => _pushToSearchResultPage("故宫博物院"),
               ),
               TextTag(
                 tag: "鱼",
+                onTap: () => _pushToSearchResultPage("鱼"),
               ),
               TextTag(
                 tag: "烤鱼",
+                onTap: () => _pushToSearchResultPage("烤鱼"),
               ),
               TextTag(
                 tag: "网红炸鸡",
+                onTap: () => _pushToSearchResultPage("网红炸鸡"),
               ),
               TextTag(
                 tag: "北京欢乐谷",
+                onTap: () => _pushToSearchResultPage("北京欢乐谷"),
               ),
               TextTag(
                 tag: "米线",
+                onTap: () => _pushToSearchResultPage("米线"),
               ),
               TextTag(
                 tag: "钟点房",
+                onTap: () => _pushToSearchResultPage("钟点房"),
               ),
             ],
           ),
@@ -227,31 +247,4 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   void onSubmitted(String value) {}
-}
-
-class TextTag extends StatelessWidget {
-  TextTag({@required this.tag});
-
-  final String tag;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => Navigator.of(context).push(CupertinoPageRoute(
-          builder: (context) => SearchResultPage(
-                searchStr: tag,
-              ))),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(5),
-        child: Container(
-          margin: EdgeInsets.all(5),
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          color: Colors.grey[100],
-          child: Text(
-            tag,
-          ),
-        ),
-      ),
-    );
-  }
 }

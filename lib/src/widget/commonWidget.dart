@@ -105,6 +105,34 @@ class MyTag extends StatelessWidget {
   }
 }
 
+class TextTag extends StatelessWidget {
+  TextTag({@required this.tag, this.padding = const EdgeInsets.all(5), this.radius = 5, this.onTap});
+
+  final String tag;
+  final EdgeInsets padding;
+  final double radius;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(radius),
+        child: Container(
+          margin: const EdgeInsets.all(5),
+          padding: padding,
+          //EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          color: Colors.grey[100],
+          child: Text(
+            tag,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 Widget buildFakeSearchBox(IconData icon, String label) {
   return Card(
     shape: RoundedRectangleBorder(
@@ -131,3 +159,4 @@ Widget buildFakeSearchBox(IconData icon, String label) {
     ),
   );
 }
+
