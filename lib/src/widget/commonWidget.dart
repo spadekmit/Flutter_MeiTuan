@@ -135,6 +135,7 @@ class TextTag extends StatelessWidget {
 
 Widget buildFakeSearchBox(IconData icon, String label) {
   return Card(
+    elevation: 0.0,
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(45.0))),
     color: CupertinoColors.lightBackgroundGray,
