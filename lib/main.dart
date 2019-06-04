@@ -3,14 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_meituan/src/data/sortData.dart';
+import 'package:flutter_meituan/src/data/searchData.dart';
 import 'package:flutter_meituan/src/language/chineseCupertinoLocalizations.dart';
 import 'package:flutter_meituan/src/tabScaffold.dart';
 import 'package:provide/provide.dart';
 
 void main() {
   final providers = Providers()
-    ..provide(Provider.function((context) => SortData()));
+    ..provide(Provider.function((context) => SearchData()));
   runApp(ProviderNode(
     providers: providers,
     child: MyApp(),

@@ -79,7 +79,7 @@ class SelectableButton extends StatelessWidget {
                 tag,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 10,
                     color: isActivity ? Colors.teal : Colors.black),
               ),
             ),
