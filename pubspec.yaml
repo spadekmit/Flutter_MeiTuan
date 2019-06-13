@@ -26,8 +26,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   flutter_staggered_grid_view: any
   provide: any
-  dio: any
-  html: ^0.14.0+2
+  shared_preferences: any
 
 dev_dependencies:
   flutter_test:
